@@ -1,3 +1,95 @@
+<?php
+// Include the connection file
+require_once('../../database/connection.php');
+
+// Initialize variables
+$username = $password = '';
+$errors = array();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get the user inputs
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+    $email = $_POST['email'];
+    $fullname = $_POST['fullname'];
+
+    // Validate inputs
+    if (empty($username) || empty($password) || empty($email) || empty($fullname)) {
+        array_push($errors, 'Username, email, password, and fullname are required');
+    }
+
+    if (strlen($username) > 20) {
+        array_push($errors, 'Username cannot be longer than 20 characters');
+    }
+
+    if (strlen($password) < 8) {
+        array_push($errors, 'Password must be at least 8 characters long');
+    }
+
+    if ($password !== $confirm_password) {
+        array_push($errors, 'Password confirmation does not match');
+    }
+    
+    // Hash the password for storage
+    $hashed_password = hash('sha256', $password);
+    
+    // Set default values
+    $default_role = 'user';
+    $default_nisn = 'dafault'; // Change this to the actual default NISN value
+
+    // Check if the username already exists
+    $query = "SELECT * FROM users WHERE username=? LIMIT 1";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('s', $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    if ($user) { // if user exists
+        array_push($errors, 'Username already exists');
+    }
+
+    // Check if the email already exists
+    $query = "SELECT * FROM users WHERE email=? LIMIT 1";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc(); 
+
+    if ($user) { // if email exists
+        array_push($errors, 'Email already exists');
+    }
+
+    // If there are no errors, proceed with registration
+    if (count($errors) === 0) {
+        // Prepare and execute a query to insert new user record
+        $query = "INSERT INTO users (username, email, password, role, fullname, nisn) VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('ssssss', $username, $email, $hashed_password, $default_role, $fullname, $default_nisn);
+        
+        if ($stmt->execute()) {
+            // Registration successful, you can redirect the user to the login page
+
+            // Add session success message
+            $_SESSION['success'] = 'Registration successful.';
+            header('Location: ../system/login.php');
+            exit();
+        } else {
+            $errors['registration_failed'] = 'Failed to register user.';
+        }
+
+        // Close the statement
+        $stmt->close();
+    }
+
+    // If there are errors, proceed with the error handling
+    if (count($errors) > 0) {
+        $stmt->close();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,8 +98,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skripsi Aziz</title>
     <!-- Tailwind CSS -->
-    <link rel="stylesheet" href="/skripsi/dist/output.css">
-    <link rel="stylesheet" href="/skripsi/node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
+    <link rel="stylesheet" href="/skripsi-aziz/dist/output.css">
+    <link rel="stylesheet" href="/skripsi-aziz/node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
 </head>
 
 <body>
@@ -16,7 +108,7 @@
         <!-- Top Navbar -->
         <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6">
             <div class="flex items-center flex-shrink-0 text-white mr-6">
-                <a href="/skripsi/public/index.php">
+                <a href="/skripsi-aziz/public/index.php">
                     <span class="font-semibold text-xl tracking-tight">Skripsi Aziz</span>
                 </a>
             </div>
@@ -36,7 +128,7 @@
                     </a>
                 </div>
                 <div>
-                    <a href="/skripsi/public/system/login.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Login</a>
+                    <a href="/skripsi-aziz/public/system/login.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Login</a>
                 </div>
             </div>
         </nav>
@@ -48,9 +140,27 @@
                 <div class="flex justify-center items-center h-full">
                     <div class="text-center px-40">
                         <h1 class="text-6xl font-bold text-gray-700 mb-10">Register</h1>
-                        <form action="../public/system/register.php" method="POST" class="mb-6">
+                        <?php if (isset($errors['registration_failed'])) : ?>
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+                                <strong class="font-bold">Registration failed!</strong>
+                                <span class="block sm:inline"><?php echo $errors['registration_failed']; ?></span>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (count($errors) > 0) {
+                            foreach ($errors as $error) : ?>
+                                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+                                    <strong class="font-bold">Error!</strong>
+                                    <span class="block sm:inline"><?php echo $error; ?></span>
+                                </div>
+                        <?php endforeach;
+                            }
+                        ?>
+                        <form action="../system/register.php" method="POST" class="mb-6">
                             <label for="username" class="block text-left text-gray-600 mb-2">Username</label>
                             <input type="text" id="username" name="username" class="border border-gray-300 rounded-full px-4 py-2 w-full mb-2" required>
+
+                            <label for="fullname" class="block text-left text-gray-600 mb-2">Fullname</label>
+                            <input type="text" id="fullname" name="fullname" class="border border-gray-300 rounded-full px-4 py-2 w-full mb-2" required>
 
                             <label for="email" class="block text-left text-gray-600 mb-2">Email</label>
                             <input type="email" id="email" name="email" class="border border-gray-300 rounded-full px-4 py-2 w-full mb-2" required>

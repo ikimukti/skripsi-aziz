@@ -65,8 +65,8 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skripsi Aziz</title>
     <!-- Tailwind CSS -->
-    <link rel="stylesheet" href="/skripsi/dist/output.css">
-    <link rel="stylesheet" href="/skripsi/node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
+    <link rel="stylesheet" href="/skripsi-aziz/dist/output.css">
+    <link rel="stylesheet" href="/skripsi-aziz/node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
 </head>
 
 <body>
@@ -75,7 +75,7 @@ $conn->close();
         <!-- Top Navbar -->
         <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6">
             <div class="flex items-center flex-shrink-0 text-white mr-6">
-                <a href="/skripsi/public/index.php">
+                <a href="/skripsi-aziz/public/index.php">
                     <span class="font-semibold text-xl tracking-tight">Skripsi Aziz</span>
                 </a>
             </div>
@@ -95,7 +95,7 @@ $conn->close();
                     </a>
                 </div>
                 <div>
-                    <a href="/skripsi/public/system/login.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Login</a>
+                    <a href="/skripsi-aziz/public/system/register.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Register</a>
                 </div>
             </div>
         </nav>
@@ -111,6 +111,13 @@ $conn->close();
                             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
                                 <strong class="font-bold">Login failed!</strong>
                                 <span class="block sm:inline"><?php echo $errors['login_failed']; ?></span>
+                            </div>
+                        <?php endif; ?>
+                        <!-- success -->
+                        <?php if (isset($_SESSION['success'])) : ?>
+                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6" role="alert">
+                                <strong class="font-bold">Success!</strong>
+                                <span class="block sm:inline"><?php echo $_SESSION['success']; ?></span>
                             </div>
                         <?php endif; ?>
                         <form action="login.php" method="POST" class="mb-6">
