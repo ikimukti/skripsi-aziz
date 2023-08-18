@@ -1,10 +1,18 @@
 <?php
+session_start();
 // Include the connection file
 require_once('../../database/connection.php');
 
 // Initialize variables
 $username = $password = '';
 $errors = array();
+
+// Check if the user is already logged in
+if (isset($_SESSION['user_id'])) {
+    // If user is already logged in, redirect to dashboard
+    header('Location: ../dashboard.php');
+    exit();
+}
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -35,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Check if user exists
         if ($result->num_rows === 1) {
             // Perform login actions (e.g., set sessions, redirect, etc.)
+
             $row = $result->fetch_assoc();
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['username'] = $row['username'];
