@@ -2,7 +2,7 @@
 // Initialize the session
 session_start();
 // Include the connection file
-require_once('../database/connection.php');
+require_once('../../database/connection.php');
 
 // Initialize variables
 $username = $password = '';
@@ -75,70 +75,12 @@ $conn->close();
     <!-- Main Content Height Menyesuaikan Hasil Kurang dari Header dan Footer -->
     <div class="h-screen flex flex-col">
         <!-- Top Navbar -->
-        <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6 shadow-md sticky top-0">
-            <div class="flex items-center flex-shrink-0 text-white mr-6">
-                <a href="/skripsi-aziz/public/index.php">
-                    <span class="font-semibold text-xl tracking-tight">Skripsi Aziz</span>
-                </a>
-            </div>
-            <div class="block lg:hidden">
-                <i class="fas fa-bars text-white"></i>
-            </div>
-            <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-                <div class="text-sm lg:flex-grow">
-                    <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
-                        Docs
-                    </a>
-                    <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
-                        Examples
-                    </a>
-                    <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white">
-                        Blog
-                    </a>
-                </div>
-                <div>
-                    <a href="/skripsi-aziz/public/system/logout.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Logout</a>
-                </div>
-            </div>
-        </nav>
+        <?php include('../components/navbar.php'); ?>
         <!-- End Top Navbar -->
         <!-- Main Content -->
         <div class="flex-grow bg-gray-50 flex flex-row shadow-md">
             <!-- Sidebar -->
-            <aside class="bg-gray-800 text-white w-64 overflow-y-auto max-h-screen sc-hide">
-                <div class="flex items-center justify-center p-6">
-                    <span class="text-2xl font-semibold">Dashboard</span>
-                </div>
-                <ul class="text-gray-400">
-                    <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer">
-                        <a href="#">Dashboard</a>
-                    </li>
-                    <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer">
-                        <a href="#">Profile</a>
-                    </li>
-                    <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer">
-                        <a href="#">Classes</a>
-                    </li>
-                    <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer">
-                        <a href="#">Students</a>
-                    </li>
-                    <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer">
-                        <a href="#">Teachers</a>
-                    </li>
-                    <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer">
-                        <a href="#">Subjects</a>
-                    </li>
-                    <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer">
-                        <a href="#">Materials</a>
-                    </li>
-                    <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer">
-                        <a href="#">Tests</a>
-                    </li>
-                    <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer">
-                        <a href="#">Settings</a>
-                    </li>
-                </ul>
-            </aside>
+            <?php include('../components/sidebar.php'); ?>
             <!-- End Sidebar -->
 
             <!-- Main Content -->
@@ -236,11 +178,7 @@ $conn->close();
         </div>
         <!-- End Main Content -->
         <!-- Footer -->
-        <footer class="bg-gray-800 text-gray-400 py-4 shadow-md mt-auto sticky bottom-0 border-t border-gray-700">
-            <div class="container mx-auto text-center text-sm">
-                <p>&copy; 2023 Your Company. All rights reserved.</p>
-            </div>
-        </footer>
+        <?php include('../components/footer.php'); ?>
         <!-- End Footer -->
     </div>
     <!-- End Main Content -->

@@ -36,7 +36,7 @@
                     </a>
                 </div>
                 <div>
-                    <a href="/skripsi-aziz/public/system/login.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Login</a>
+                    <a href="/skripsi-aziz/public/systems/login.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Login</a>
                 </div>
             </div>
         </nav>
@@ -47,7 +47,7 @@
                 <div class="text-center px-40">
                     <h1 class="text-6xl font-bold text-gray-700 mb-10">Skripsi Aziz</h1>
                     <p class="text-gray-500 mb-10 text-xl">Pengembangan Media Pembelajaran Berbasis Web Menggunakan Metode Multimedia Interaktif Untuk Meningkatkan Hasil Belajar Siswa Pada Mata Pelajaran Pemrograman Web</p>
-                    <a href="../public/system/login.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                    <a href="../public/s/login.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                         Get Started
                     </a>
                 </div>

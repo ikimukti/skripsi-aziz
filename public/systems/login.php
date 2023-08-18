@@ -10,7 +10,7 @@ $errors = array();
 // Check if the user is already logged in
 if (isset($_SESSION['user_id'])) {
     // If user is already logged in, redirect to dashboard
-    header('Location: ../dashboard.php');
+    header('Location: ../systems/dashboard.php');
     exit();
 }
 
@@ -104,7 +104,7 @@ $conn->close();
                     </a>
                 </div>
                 <div>
-                    <a href="/skripsi-aziz/public/system/register.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Register</a>
+                    <a href="/skripsi-aziz/public/systems/register.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Register</a>
                 </div>
             </div>
         </nav>
@@ -144,8 +144,8 @@ $conn->close();
                                 Log In
                             </button>
                         </form>
-                        <p class="text-gray-500 text-sm">Forgot your password? <a href="../system/forgot-password.php" class="text-blue-500">Click here</a></p>
-                        <p class="text-gray-500 text-sm">Don't have an account? <a href="../system/register.php" class="text-blue-500">Register here</a></p>
+                        <p class="text-gray-500 text-sm">Forgot your password? <a href="../systems/forgot-password.php" class="text-blue-500">Click here</a></p>
+                        <p class="text-gray-500 text-sm">Don't have an account? <a href="../systems/register.php" class="text-blue-500">Register here</a></p>
                     </div>
                 </div>
             </div>

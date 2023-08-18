@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Add session success message
             $_SESSION['success'] = 'Registration successful.';
-            header('Location: ../system/login.php');
+            header('Location: ../systems/login.php');
             exit();
         } else {
             $errors['registration_failed'] = 'Failed to register user.';
@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </a>
                 </div>
                 <div>
-                    <a href="/skripsi-aziz/public/system/login.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Login</a>
+                    <a href="/skripsi-aziz/public/systems/login.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Login</a>
                 </div>
             </div>
         </nav>
@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endforeach;
                             }
                         ?>
-                        <form action="../system/register.php" method="POST" class="mb-6">
+                        <form action="../systems/register.php" method="POST" class="mb-6">
                             <label for="username" class="block text-left text-gray-600 mb-2">Username</label>
                             <input type="text" id="username" name="username" class="border border-gray-300 rounded-full px-4 py-2 w-full mb-2" required>
 
@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 Register
                             </button>
                         </form>
-                        <p class="text-gray-500 text-sm">Already have an account? <a href="../system/login.php" class="text-blue-500">Click here to login</a></p>
+                        <p class="text-gray-500 text-sm">Already have an account? <a href="../systems/login.php" class="text-blue-500">Click here to login</a></p>
                     </div>
                 </div>
             </div>
