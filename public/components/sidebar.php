@@ -1,12 +1,7 @@
             <aside class="bg-gray-800 text-white w-64 overflow-y-auto max-h-screen sc-hide">
-                <div class="flex items-center justify-center p-6 space-x-4">
-                    <i class="fas fa-tachometer-alt text-4xl"></i>
-                    <span class="text-2xl font-semibold">Dashboard</span>
-                </div>
-                <hr class="border-b border-gray-700 my-2 mx-4">
                 <ul class="text-gray-400">
                     <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer space-x-2 flex items-center">
-                        <i class="fas fa-tachometer-alt mr-3"></i> 
+                        <i class="fas fa-tachometer-alt mr-3"></i>
                         <a href="../systems/dashboard.php">Dashboard</a>
                     </li>
                     <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer space-x-2 flex items-center">

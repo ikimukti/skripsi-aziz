@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['fullname'] = $row['fullname'];
 
             // Redirect to a dashboard or homepage
-            header('Location: ../dashboard.php');
+            header('Location: ../systems/dashboard.php');
             exit();
         } else {
             $errors['login_failed'] = 'Invalid username or password.';
