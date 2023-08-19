@@ -11,35 +11,35 @@
                     </li>
                     <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer space-x-2 flex items-center">
                         <i class="fas fa-user mr-3"></i>
-                        <a href="#">Profile</a>
+                        <a href="../profiles/profile.php">Profile</a>
                     </li>
                     <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer space-x-2 flex items-center">
                         <i class="fas fa-users mr-3"></i>
-                        <a href="#">Classes</a>
+                        <a href="../classes/classes.php">Classes</a>
                     </li>
                     <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer space-x-2 flex items-center">
                         <i class="fas fa-user-graduate mr-3"></i>
-                        <a href="#">Students</a>
+                        <a href="../students/students.php">Students</a>
                     </li>
                     <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer space-x-2 flex items-center">
                         <i class="fas fa-chalkboard-teacher mr-3"></i>
-                        <a href="#">Teachers</a>
+                        <a href="../teachers/teachers.php">Teachers</a>
                     </li>
                     <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer space-x-2 flex items-center">
                         <i class="fas fa-book mr-3"></i>
-                        <a href="#">Subjects</a>
+                        <a href="../subjects/subjects.php">Subjects</a>
                     </li>
                     <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer space-x-2 flex items-center">
                         <i class="fas fa-book-reader mr-3"></i>
-                        <a href="#">Materials</a>
+                        <a href="../materials/materials.php">Materials</a>
                     </li>
                     <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer space-x-2 flex items-center">
                         <i class="fas fa-file-alt mr-3"></i>
-                        <a href="#">Exams</a>
+                        <a href="../exams/exams.php">Exams</a>
                     </li>
                     <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer space-x-2 flex items-center">
                         <i class="fas fa-cog mr-3"></i>
-                        <a href="#">Settings</a>
+                        <a href="../systems/settings.php">Settings</a>
                     </li>
                 </ul>
             </aside>
