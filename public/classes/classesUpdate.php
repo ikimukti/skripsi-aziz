@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <!-- End Navigation -->
                 <!-- Form Update -->
-                <form action="classesUpdate.php" method="POST" class="flex flex-col w-full space-x-2" asjid <!-- Class Name -->
+                <form action="classesUpdate.php" method="POST" class="flex flex-col w-full space-x-2">
                     <label for="class_name" class="block font-semibold text-gray-800 mt-2 mb-2">Class Name</label>
                     <input type="text" id="class_name" name="class_name" class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 focus:outline-none px-2 py-2 border" value="<?php echo $class_name; ?>">
                     <!-- Error Class Name -->
