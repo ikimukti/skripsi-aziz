@@ -10,7 +10,7 @@
                     </li>
                     <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer space-x-2 flex items-center">
                         <i class="fas fa-users mr-3"></i>
-                        <a href="../classes/classes.php">Classes</a>
+                        <a href="../classes/classesList.php">Classes</a>
                     </li>
                     <li class="px-6 py-4 hover:bg-gray-700 cursor-pointer space-x-2 flex items-center">
                         <i class="fas fa-user-graduate mr-3"></i>

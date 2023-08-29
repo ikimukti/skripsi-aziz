@@ -110,7 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <th class="text-left py-2">No</th>
                                 <th class="text-left py-2">Class Name</th>
                                 <th class="text-left py-2">Description</th>
-                                <th class="text-left py-2">Created At</th>
                                 <th class="text-left py-2">Updated At</th>
                                 <th class="text-left py-2">Action</th>
                             </tr>
@@ -125,27 +124,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             // Loop through the results and display data in rows
                             while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td class='py-2'>" . $no++ . "</td>";
-                                echo "<td class='py-2'>" . $row['classes_name'] . "</td>";
-                                // keluarkan sedikit deskripsi
-                                echo "<td class='py-2'>" . substr($row['description'], 0, 50) . "...</td>";
-                                $created_at = new DateTime($row['created_at']);
-                                $updated_at = new DateTime($row['updated_at']);
-                                echo "<td class='py-2'>" . $created_at->format('M j, Y H:i:s') . "</td>";
-                                echo "<td class='py-2'>" . $updated_at->format('M j, Y H:i:s') . "</td>";
-                                echo "<td class='py-2'>";
-                                echo "<a href='../classes/update.php?id=" . $row['id'] . "' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>";
-                                echo "<i class='fas fa-edit mr-2'></i>";
-                                echo "<span>Edit</span>";
-                                echo "</a>";
-                                echo "<a href='../classes/delete.php?id=" . $row['id'] . "' class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-flex items-center text-sm'>";
-                                echo "<i class='fas fa-trash mr-2'></i>";
-                                echo "<span>Delete</span>";
-                                echo "</a>";
-                                echo "</td>";
-                                echo "</tr>";
-                            }
+                            ?>
+                                <tr>
+                                    <td class="py-2"><?php echo $no++; ?></td>
+                                    <td class="py-2"><?php echo $row['classes_name']; ?></td>
+                                    <td class="py-2"><?php echo substr($row['description'], 0, 50) . '...'; ?></td>
+                                    <td class="py-2"><?php echo date('M j, Y H:i:s', strtotime($row['updated_at'])); ?></td>
+                                    <td class='py-2'>
+                                        <a href="../classes/classesDetail.php?id=<?php echo $row['id']?>" class='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
+                                            <i class='fas fa-eye mr-2'></i>
+                                            <span>Detail</span>
+                                        </a>
+                                        <a href="../classes/classesUpdate.php?id=<?php echo $row['id']?>" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
+                                            <i class='fas fa-edit mr-2'></i>
+                                            <span>Edit</span>
+                                        </a>
+                                        <a href="../classes/ClassesDelete.php?id=<?php echo $row['id']?>" class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-flex items-center text-sm'>
+                                            <i class='fas fa-trash mr-2'></i>
+                                            <span>Delete</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <?php
+                                }
                             ?>
                         </tbody>
                     </table>

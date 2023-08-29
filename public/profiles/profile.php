@@ -130,6 +130,17 @@ $conn->close();
                             </p>
                         <?php endif; ?>
 
+                        <!-- Role -->
+                        <label for="role" class="block font-semibold text-gray-800 mt-2 mb-2">Role</label>
+                        <input type="text" id="role" name="role" class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 focus:outline-none px-2 py-2 border" value="<?php echo $_SESSION['role']; ?>">
+                        <!-- Error Role -->
+                        <?php if (isset($errors['role'])) : ?>
+                            <p class="text-red-500 text-sm">
+                                <?php echo $errors['role']; ?>
+                            </p>
+                            <!-- End Error Role -->
+
+                        <?php endif; ?>
 
 
 
