@@ -93,7 +93,11 @@ $conn->close();
             <div class="flex items-start justify-start p-6 shadow-md m-4 flex-1 flex-col">
                 <!-- Header Content -->
                 <div class="flex flex-row justify-between items-center w-full border-b-2 border-gray-600 mb-2 pb-2">
-                    <h1 class="text-3xl text-gray-800 font-semibol w-full">Classes Create</h1>
+                    <h1 class="text-3xl text-gray-800 font-semibold w-full">Create Class</h1>
+                    <a href="../classes/classesList.php" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center space-x-2">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back</span>
+                    </a>
                 </div>
                 <!-- End Header Content -->
                 <!-- Content -->

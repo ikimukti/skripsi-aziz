@@ -7,7 +7,7 @@ require_once('../../database/connection.php');
 // Initialize variables
 $username = $password = '';
 $errors = array();
-
+// Close the database connection
 ?>
 <?php include_once('../components/header.php'); ?>
 <!-- Main Content Height Menyesuaikan Hasil Kurang dari Header dan Footer -->
@@ -22,13 +22,13 @@ $errors = array();
         <!-- End Sidebar -->
 
         <!-- Main Content -->
-        <main class=" bg-gray-50 flex flex-col flex-1 overflow-y-auto">
+        <main class=" bg-gray-50 flex flex-col flex-1 overflow-y-scroll h-screen flex-shrink-0 sc-hide">
             <div class="flex items-start justify-start p-6 shadow-md m-4 flex-1 flex-col">
                 <!-- Header Content -->
                 <div class="flex flex-row justify-between items-center w-full border-b-2 border-gray-600 mb-2 pb-2">
-                    <h1 class="text-3xl text-gray-800 font-semibol w-full">Classes</h1>
+                    <h1 class="text-3xl text-gray-800 font-semibol w-full">Students</h1>
                     <div class="flex flex-row justify-end items-center">
-                        <a href="../classes/classesCreate.php" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+                        <a href="../students/studentsCreate.php" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
                             <i class="fas fa-plus mr-2"></i>
                             <span>Create</span>
                         </a>
@@ -41,7 +41,7 @@ $errors = array();
                     <div class="flex flex-row justify-between items-center w-full mb-2 pb-2">
                         <div>
                             <h2 class="text-lg text-gray-800 font-semibold">Welcome back, <?php echo $_SESSION['fullname']; ?>!</h2>
-                            <p class="text-gray-600 text-sm">Class information.</p>
+                            <p class="text-gray-600 text-sm">Students information.</p>
                         </div>
                         <!-- Search -->
                         <form class="flex items-center justify-end space-x-2 w-96">
@@ -59,9 +59,10 @@ $errors = array();
                         <thead>
                             <tr>
                                 <th class="text-left py-2">No</th>
-                                <th class="text-left py-2">Class Name</th>
-                                <th class="text-left py-2">Description</th>
-                                <th class="text-left py-2">Updated At</th>
+                                <th class="text-left py-2">Username</th>
+                                <th class="text-left py-2">Email</th>
+                                <th class="text-left py-2">Fullname</th>
+                                <th class="text-left py-2">NISN</th>
                                 <th class="text-left py-2">Action</th>
                             </tr>
                         </thead>
@@ -70,14 +71,17 @@ $errors = array();
                             // Fetch class data from the database limit by 15 data per page
                             $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                             $page = isset($_GET['page']) ? $_GET['page'] : 1;
-                            $query = "SELECT id, classes_name, description, created_at, updated_at FROM classes WHERE classes_name LIKE '%$searchTerm%' OR description LIKE '%$searchTerm%'" . " LIMIT 15 OFFSET " . ($page - 1) * 15;
+                            $query = "SELECT id, username, email, fullname, nisn FROM users WHERE role = 'student' AND username LIKE '%$searchTerm%' OR email LIKE '%$searchTerm%' OR fullname LIKE '%$searchTerm%' OR nisn LIKE '%$searchTerm%'" . " LIMIT " . ($page - 1) * 15 . ", 15";
                             $result = $conn->query($query);
 
                             // Count total rows in the table
-                            $queryCount = "SELECT COUNT(*) AS count FROM classes WHERE classes_name LIKE '%$searchTerm%' OR description LIKE '%$searchTerm%' ";
+                            $queryCount = "SELECT COUNT(*) AS count FROM users WHERE role = 'student' AND username LIKE '%$searchTerm%' OR email LIKE '%$searchTerm%' OR fullname LIKE '%$searchTerm%' OR nisn LIKE '%$searchTerm%'";
                             $resultCount = $conn->query($queryCount);
                             $rowCount = $resultCount->fetch_assoc()['count'];
                             $totalPage = ceil($rowCount / 15);
+
+                            // Loop through the results and display data in rows
+                            
                             $no = 1;
 
                             // Loop through the results and display data in rows
@@ -85,9 +89,10 @@ $errors = array();
                             ?>
                                 <tr>
                                     <td class="py-2"><?php echo $no++; ?></td>
-                                    <td class="py-2"><?php echo $row['classes_name']; ?></td>
-                                    <td class="py-2"><?php echo substr($row['description'], 0, 50) . '...'; ?></td>
-                                    <td class="py-2"><?php echo date('M j, Y H:i:s', strtotime($row['updated_at'])); ?></td>
+                                    <td class="py-2"><?php echo $row['username']; ?></td>
+                                    <td class="py-2"><?php echo $row['email']; ?></td>
+                                    <td class="py-2"><?php echo $row['fullname']; ?></td>
+                                    <td class="py-2"><?php echo $row['nisn']; ?></td>
                                     <td class='py-2'>
                                         <a href="../classes/classesDetail.php?id=<?php echo $row['id']?>" class='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
                                             <i class='fas fa-eye mr-2'></i>
@@ -174,6 +179,8 @@ $errors = array();
                         </div>
                 </div>
                 <!-- End Content -->
+            </div>
+            <hr class="mt-60">
         </main>
         <!-- End Main Content -->
     </div>
