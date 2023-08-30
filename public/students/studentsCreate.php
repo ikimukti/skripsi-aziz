@@ -17,18 +17,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $role = 'student';
     $fullname = $_POST['fullname'];
     $nisn = $_POST['nisn'];
+    $profile_url = 'static/image/profile/default.png';
 
     // Check for errors
     if (empty($username)) {
         $errors['username'] = "Username is required.";
-    } 
-    else if (strlen($username) > 20) {
+    } else if (strlen($username) > 20) {
         $errors['username'] = "Username cannot be longer than 20 characters";
-    }
-    else if (strlen($username) < 5) {
+    } else if (strlen($username) < 5) {
         $errors['username'] = "Username cannot be shorter than 5 characters";
-    }
-    else {
+    } else {
         $query = "SELECT * FROM users WHERE username=? LIMIT 1";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('s', $username);
@@ -41,11 +39,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     if (empty($email)) {
         $errors['email'] = "Email is required.";
-    }
-    else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = "Email is not valid.";
-    }
-    else {
+    } else {
         $query = "SELECT * FROM users WHERE email=? LIMIT 1";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('s', $email);
@@ -91,8 +87,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $file_type = $_FILES['profile_url']['type'];
         $file_parts = explode('.', $_FILES['profile_url']['name']);
         $file_ext = strtolower(end($file_parts));
+        $time = time();
+        $new_file_name = 'student_' . hash('sha256', $time . $file_name) . '.' . $file_ext;
 
         $extensions = array("jpeg", "jpg", "png");
+        $profile_url = 'static/image/profile/' . $new_file_name;
 
         if (in_array($file_ext, $extensions) === false) {
             $errors['profile_url'] = "Extension not allowed, please choose a JPEG or PNG file.";
@@ -101,24 +100,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($file_size > 2097152) {
             $errors['profile_url'] = 'File size must be exactly 2 MB';
         }
-    } else {
-        $errors['profile_url'] = "Class image is required.";
     }
 
     // If no errors, insert data into the database
     if (empty($errors)) {
+        // Insert data into the database
         $sql = "INSERT INTO users (username, email, password, role, fullname, nisn, profile_url) VALUES ('$username', '$email', '$password', '$role', '$fullname', '$nisn', '$profile_url')";
-        
+
         if ($conn->query($sql) === TRUE) {
             // Insertion successful
             $last_id = $conn->insert_id;
-            $file_name = $last_id . '.' . $file_ext;
-            $file_path = '../static/image/users/' . $file_name;
-            $sql = "UPDATE users SET profile_url = '$file_name' WHERE id = '$last_id'";
-            if ($conn->query($sql) === TRUE) {
-                move_uploaded_file($file_tmp, $file_path);
-                header('Location: studentsList.php' . '?status=success');
+            // Prepare the UPDATE query
+            $update_query = "UPDATE users SET profile_url = ? WHERE id = ?";
+            $stmt = $conn->prepare($update_query);
+            $stmt->bind_param('si', $profile_url, $last_id);
+            // Execute the query
+            if ($stmt->execute()) {
+                // Upload file to the server
+                move_uploaded_file($file_tmp, '../' . $profile_url);
+                // Redirect to teachersList page
+                header('location: studentsList.php');
             } else {
+                // Update failed
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }
         } else {

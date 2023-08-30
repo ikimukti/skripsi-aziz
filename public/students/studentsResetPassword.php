@@ -17,28 +17,14 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 
 $id = $_GET['id'];
-// delete the file from the server profile_url
-$query = "SELECT profile_url FROM users WHERE id = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param('i', $id);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
-if ($user) {
-  $profile_url = $user['profile_url'];
-  unlink('../' . $profile_url);
-}
-$stmt->close();
 
-// Perform deletion logic and database operations here
-$query = "DELETE FROM users WHERE id = ?";
+// Perform reset password logic and database operations here
+$newPassword = hash('sha256', '12345678');
+$query = "UPDATE users SET password = ? WHERE id = ?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param('i', $id);
+$stmt->bind_param('si', $newPassword, $id);
 $stmt->execute();
 $stmt->close();
-
-
-
 
 // Redirect to a suitable page after deletion
 header('Location: ../students/studentsList.php');

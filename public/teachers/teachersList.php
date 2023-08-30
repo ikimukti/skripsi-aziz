@@ -26,9 +26,9 @@ $errors = array();
       <div class="flex items-start justify-start p-6 shadow-md m-4 flex-1 flex-col">
         <!-- Header Content -->
         <div class="flex flex-row justify-between items-center w-full border-b-2 border-gray-600 mb-2 pb-2">
-          <h1 class="text-3xl text-gray-800 font-semibol w-full">Students</h1>
+          <h1 class="text-3xl text-gray-800 font-semibol w-full">Teachers</h1>
           <div class="flex flex-row justify-end items-center">
-            <a href="../students/studentsCreate.php" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+            <a href="../teachers/teachersCreate.php" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
               <i class="fas fa-plus mr-2"></i>
               <span>Create</span>
             </a>
@@ -41,7 +41,7 @@ $errors = array();
           <div class="flex flex-row justify-between items-center w-full mb-2 pb-2">
             <div>
               <h2 class="text-lg text-gray-800 font-semibold">Welcome back, <?php echo $_SESSION['fullname']; ?>!</h2>
-              <p class="text-gray-600 text-sm">Students information.</p>
+              <p class="text-gray-600 text-sm">Here are the list of teachers.</p>
             </div>
             <!-- Search -->
             <form class="flex items-center justify-end space-x-2 w-96">
@@ -62,7 +62,6 @@ $errors = array();
                 <th class="text-left py-2">Username</th>
                 <th class="text-left py-2">Email</th>
                 <th class="text-left py-2">Fullname</th>
-                <th class="text-left py-2">NISN</th>
                 <th class="text-left py-2">Action</th>
               </tr>
             </thead>
@@ -72,13 +71,13 @@ $errors = array();
               $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
               $page = isset($_GET['page']) ? $_GET['page'] : 1;
               $query = "SELECT id, username, email, fullname, nisn FROM users 
-                      WHERE role = 'student' AND (username LIKE '%$searchTerm%' OR email LIKE '%$searchTerm%' OR fullname LIKE '%$searchTerm%' OR nisn LIKE '%$searchTerm%') 
+                      WHERE role = 'teacher' AND (username LIKE '%$searchTerm%' OR email LIKE '%$searchTerm%' OR fullname LIKE '%$searchTerm%' OR nisn LIKE '%$searchTerm%') 
                       ORDER BY username ASC" .
                 " LIMIT " . ($page - 1) * 15 . ", 15";
               $result = $conn->query($query);
 
               // Count total rows in the table
-              $queryCount = "SELECT COUNT(*) AS count FROM users WHERE role = 'student' AND (username LIKE '%$searchTerm%' OR email LIKE '%$searchTerm%' OR fullname LIKE '%$searchTerm%' OR nisn LIKE '%$searchTerm%')";
+              $queryCount = "SELECT COUNT(*) AS count FROM users WHERE role = 'teacher' AND (username LIKE '%$searchTerm%' OR email LIKE '%$searchTerm%' OR fullname LIKE '%$searchTerm%' OR nisn LIKE '%$searchTerm%')";
               $resultCount = $conn->query($queryCount);
               $rowCount = $resultCount->fetch_assoc()['count'];
               $totalPage = ceil($rowCount / 15);
@@ -95,25 +94,24 @@ $errors = array();
                   <td class="py-2"><?php echo $row['username']; ?></td>
                   <td class="py-2"><?php echo $row['email']; ?></td>
                   <td class="py-2"><?php echo $row['fullname']; ?></td>
-                  <td class="py-2"><?php echo $row['nisn']; ?></td>
                   <td class='py-2'>
                     <!--  Detail Button -->
-                    <a href="../students/studentsDetail.php?id=<?php echo $row['id'] ?>" class='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
+                    <a href="../teachers/teachersDetail.php?id=<?php echo $row['id'] ?>" class='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
                       <i class='fas fa-eye mr-2'></i>
                       <span>Detail</span>
                     </a>
                     <!--  Edit Button -->
-                    <a href="../students/studentsUpdate.php?id=<?php echo $row['id'] ?>" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
+                    <a href="../teachers/teachersUpdate.php?id=<?php echo $row['id'] ?>" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
                       <i class='fas fa-edit mr-2'></i>
                       <span>Edit</span>
                     </a>
                     <!--  Delete Button -->
-                    <a href="../students/studentsDelete.php?id=<?php echo $row['id'] ?>" class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-flex items-center text-sm'>
+                    <a href="../teachers/teachersDelete.php?id=<?php echo $row['id'] ?>" class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-flex items-center text-sm'>
                       <i class='fas fa-trash mr-2'></i>
                       <span>Delete</span>
                     </a>
                     <!--  Reset Password Button -->
-                    <a href="../students/studentsResetPassword.php?id=<?php echo $row['id'] ?>" class='bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center text-sm'>
+                    <a href="../teachers/teachersResetPassword.php?id=<?php echo $row['id'] ?>" class='bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center text-sm'>
                       <i class='fas fa-trash mr-2'></i>
                       <span>Reset Password</span>
                     </a>

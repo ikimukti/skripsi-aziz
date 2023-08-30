@@ -41,5 +41,5 @@ $stmt->close();
 
 
 // Redirect to a suitable page after deletion
-header('Location: ../students/studentsList.php');
+header('Location: ../teachers/teachersList.php');
 exit();
