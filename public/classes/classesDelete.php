@@ -3,7 +3,7 @@ session_start();
 require_once('../../database/connection.php');
 
 // Check if user is logged in and has the necessary permissions
-if ($_SESSION['role'] === 'user') {
+if ($_SESSION['role'] === 'student') {
     // Redirect to a suitable page if not authorized
     header('Location: ../systems/login.php');
     exit();
@@ -28,4 +28,3 @@ $stmt->close();
 // Redirect to a suitable page after deletion
 header('Location: ../classes/classesList.php');
 exit();
-?>
