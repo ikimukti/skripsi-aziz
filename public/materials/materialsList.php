@@ -7,6 +7,13 @@ require_once('../../database/connection.php');
 // Initialize variables
 $username = $password = '';
 $errors = array();
+$selectedSubject = ''; // Variable to store the selected subject
+
+// Check if a subject is selected from the dropdown
+if (isset($_GET['subject']) && $_GET['subject'] !== '') {
+  $selectedSubject = $_GET['subject'];
+}
+
 // Close the database connection
 ?>
 <?php include_once('../components/header.php'); ?>
@@ -26,9 +33,9 @@ $errors = array();
       <div class="flex items-start justify-start p-6 shadow-md m-4 flex-1 flex-col">
         <!-- Header Content -->
         <div class="flex flex-row justify-between items-center w-full border-b-2 border-gray-600 mb-2 pb-2">
-          <h1 class="text-3xl text-gray-800 font-semibol w-full">Subjects List</h1>
+          <h1 class="text-3xl text-gray-800 font-semibol w-full">Materials List</h1>
           <div class="flex flex-row justify-end items-center">
-            <a href="../subjects/subjectsCreate.php" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+            <a href="../materials/materialsCreate.php" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
               <i class="fas fa-plus mr-2"></i>
               <span>Create</span>
             </a>
@@ -37,11 +44,36 @@ $errors = array();
         <!-- End Header Content -->
         <!-- Content -->
         <div class="flex flex-col w-full">
+          <!-- Dropdown for Selecting Subjects -->
+          <div class="mb-4">
+            <label for="subjectDropdown" class="block text-gray-800 font-semibold">Select Subject:</label>
+            <select id="subjectDropdown" name="subjectDropdown" class="bg-white border border-gray-300 rounded-lg py-2 px-4 block w-full">
+              <option value="" <?php if ($selectedSubject === '') echo 'selected'; ?>>All Subjects</option>
+              <?php
+              // Fetch subjects from the database
+              $querySubjects = "SELECT id, subject_name FROM subjects ORDER BY subject_name ASC";
+              $resultSubjects = $conn->query($querySubjects);
+
+              while ($rowSubject = $resultSubjects->fetch_assoc()) {
+                $subjectId = $rowSubject['id'];
+                $subjectName = $rowSubject['subject_name'];
+                $selected = ($subjectId == $selectedSubject) ? 'selected' : '';
+
+                echo "<option value='$subjectId' $selected>$subjectName</option>";
+              }
+              ?>
+            </select>
+            <button onclick="applyFilter()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">
+              Apply Filter
+            </button>
+          </div>
+          <!-- End Dropdown -->
+
           <!-- Navigation -->
           <div class="flex flex-row justify-between items-center w-full mb-2 pb-2">
             <div>
               <h2 class="text-lg text-gray-800 font-semibold">Welcome back, <?php echo $_SESSION['fullname']; ?>!</h2>
-              <p class="text-gray-600 text-sm">Here are the list of subjects.</p>
+              <p class="text-gray-600 text-sm">Here are the list of materials.</p>
             </div>
             <!-- Search -->
             <form class="flex items-center justify-end space-x-2 w-96">
@@ -59,38 +91,49 @@ $errors = array();
             <thead>
               <tr>
                 <th class="text-left py-2">No</th>
-                <th class="text-left py-2">Subject Name</th>
-                <th class="text-left py-2">Subject Code</th>
-                <th class="text-left py-2">Subject Description</th>
+                <th class="text-left py-2">Title</th>
+                <th class="text-left py-2">Type</th>
+                <th class="text-left py-2">Content</th>
+                <th class="text-left py-2">Subject</th>
                 <th class="text-left py-2">Action</th>
               </tr>
             </thead>
             <tbody>
               <?php
-              // Fetch class data from the database limit by 15 data per page
+              // Build the SQL query based on selected subject (if any)
+              $query = "SELECT m.id, m.title, m.type, m.content, m.sequence, s.subject_name 
+                                      FROM materials m
+                                      LEFT JOIN subjects s ON m.subject_id = s.id
+                                      WHERE 1 ";
+
+              if ($selectedSubject !== '') {
+                $query .= "AND s.id = $selectedSubject ";
+              }
+
+              $query .= "ORDER BY m.id ASC";
+
+              // Fetch material data from the database limit by 15 data per page
               $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
               $page = isset($_GET['page']) ? $_GET['page'] : 1;
-              $query = "SELECT id, subject_name, subject_code, subject_description, subject_image, created_at, updated_at FROM subjects
-                      WHERE 
-                        subject_name LIKE '%" . $searchTerm . "%' OR
-                        subject_code LIKE '%" . $searchTerm . "%' OR
-                        subject_description LIKE '%" . $searchTerm . "%'
-                      ORDER BY id ASC" .
-                " LIMIT " . ($page - 1) * 15 . ", 15";
+              $query .= " LIMIT " . ($page - 1) * 15 . ", 15";
               $result = $conn->query($query);
 
               // Count total rows in the table
-              $queryCount = "SELECT COUNT(*) AS count FROM subjects
-                      WHERE
-                        subject_name LIKE '%" . $searchTerm . "%' OR
-                        subject_code LIKE '%" . $searchTerm . "%' OR
-                        subject_description LIKE '%" . $searchTerm . "%'
-                      ";
+              $queryCount = "SELECT COUNT(*) AS count FROM materials m
+                                            LEFT JOIN subjects s ON m.subject_id = s.id
+                                            WHERE 1 ";
+
+              if ($selectedSubject !== '') {
+                $queryCount .= "AND s.id = $selectedSubject ";
+              }
+
+              $queryCount .= "AND (m.title LIKE '%" . $searchTerm . "%' OR
+                                            m.type LIKE '%" . $searchTerm . "%' OR
+                                            m.content LIKE '%" . $searchTerm . "%')";
+
               $resultCount = $conn->query($queryCount);
               $rowCount = $resultCount->fetch_assoc()['count'];
               $totalPage = ceil($rowCount / 15);
-
-              // Loop through the results and display data in rows
 
               $no = 1;
 
@@ -99,23 +142,23 @@ $errors = array();
               ?>
                 <tr>
                   <td class="py-2"><?php echo $no++; ?></td>
+                  <td class="py-2"><?php echo $row['title']; ?></td>
+                  <td class="py-2"><?php echo $row['type']; ?></td>
+                  <td class="py-2"><?php echo substr($row['content'], 0, 50) . '...'; ?></td>
                   <td class="py-2"><?php echo $row['subject_name']; ?></td>
-                  <td class="py-2"><?php echo $row['subject_code']; ?></td>
-                  <!-- subject_description should be limited to 50 characters -->
-                  <td class="py-2"><?php echo substr($row['subject_description'], 0, 50); ?>...</td>
                   <td class='py-2'>
-                    <!--  Detail Button -->
-                    <a href="../subjects/subjectsDetail.php?id=<?php echo $row['id'] ?>" class='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
+                    <!-- Detail Button -->
+                    <a href="../materials/materialsDetail.php?id=<?php echo $row['id'] ?>" class='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
                       <i class='fas fa-eye mr-2'></i>
                       <span>Detail</span>
                     </a>
-                    <!--  Edit Button -->
-                    <a href="../subjects/subjectsUpdate.php?id=<?php echo $row['id'] ?>" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
+                    <!-- Edit Button -->
+                    <a href="../materials/materialsUpdate.php?id=<?php echo $row['id'] ?>" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
                       <i class='fas fa-edit mr-2'></i>
                       <span>Edit</span>
                     </a>
-                    <!--  Delete Button -->
-                    <a href="../subjects/subjectsDelete.php?id=<?php echo $row['id'] ?>" class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-flex items-center text-sm'>
+                    <!-- Delete Button -->
+                    <a href="../materials/materialsDelete.php?id=<?php echo $row['id'] ?>" class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-flex items-center text-sm'>
                       <i class='fas fa-trash mr-2'></i>
                       <span>Delete</span>
                     </a>
@@ -126,8 +169,7 @@ $errors = array();
               if ($result->num_rows === 0) {
               ?>
                 <tr>
-                  <td colspan=" 5" class="py-2 text-center">No data found.
-                  </td>
+                  <td colspan="6" class="py-2 text-center">No data found.</td>
                 </tr>
               <?php
               }
@@ -143,14 +185,14 @@ $errors = array();
               <span class="text-gray-600">Total <?php echo $rowCount; ?> rows</span>
             </div>
             <div class="flex flex-row justify-end items-center space-x-2">
-              <a href="?page=1&search=<?php echo $searchTerm; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
+              <a href="?page=1&search=<?php echo $searchTerm; ?>&subject=<?php echo $selectedSubject; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
                 <i class="fas fa-angle-double-left"></i>
               </a>
               <a href="?page=<?php if ($page == 1) {
                                 echo $page;
                               } else {
                                 echo $page - 1;
-                              } ?>&search=<?php echo $searchTerm; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
+                              } ?>&search=<?php echo $searchTerm; ?>&subject=<?php echo $selectedSubject; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
                 <i class="fas fa-angle-left"></i>
               </a>
               <!-- Page number -->
@@ -170,9 +212,9 @@ $errors = array();
               }
               for ($i = $startPage; $i <= $endPage; $i++) {
                 if ($i == $page) {
-                  echo "<a href='?page=$i&search=$searchTerm' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center'>$i</a>";
+                  echo "<a href='?page=$i&search=$searchTerm&subject=$selectedSubject' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center'>$i</a>";
                 } else {
-                  echo "<a href='?page=$i&search=$searchTerm' class='bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center'>$i</a>";
+                  echo "<a href='?page=$i&search=$searchTerm&subject=$selectedSubject' class='bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center'>$i</a>";
                 }
               }
               ?>
@@ -180,10 +222,10 @@ $errors = array();
                                 echo $page;
                               } else {
                                 echo $page + 1;
-                              } ?>&search=<?php echo $searchTerm; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
+                              } ?>&search=<?php echo $searchTerm; ?>&subject=<?php echo $selectedSubject; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
                 <i class="fas fa-angle-right"></i>
               </a>
-              <a href="?page=<?php echo $totalPage; ?>&search=<?php echo $searchTerm; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
+              <a href="?page=<?php echo $totalPage; ?>&search=<?php echo $searchTerm; ?>&subject=<?php echo $selectedSubject; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
                 <i class="fas fa-angle-double-right"></i>
               </a>
             </div>
@@ -204,6 +246,15 @@ $errors = array();
   <!-- End Footer -->
 </div>
 <!-- End Main Content -->
+
+<script>
+  // JavaScript function to apply the filter when a subject is selected from the dropdown
+  function applyFilter() {
+    const selectedSubject = document.getElementById('subjectDropdown').value;
+    // Redirect to the same page with the selected subject as a query parameter
+    window.location.href = `materialsList.php?subject=${selectedSubject}`;
+  }
+</script>
 
 </body>
 
