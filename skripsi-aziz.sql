@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2023 at 01:07 PM
+-- Generation Time: Sep 23, 2023 at 06:34 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `classes` (
   `id` int(11) NOT NULL,
   `classes_name` varchar(255) DEFAULT NULL,
-  `image_url` varchar(255) DEFAULT 'static/image/classes/default.png',
+  `classes_image` varchar(255) DEFAULT 'static/image/classes/default.png',
   `description` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -40,10 +40,13 @@ CREATE TABLE `classes` (
 -- Dumping data for table `classes`
 --
 
-INSERT INTO `classes` (`id`, `classes_name`, `image_url`, `description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `classes` (`id`, `classes_name`, `classes_image`, `description`, `created_at`, `updated_at`) VALUES
 (1, 'Class 1', 'static/image/classes/default.png', 'Production season themselves arm material in. This kid fish right page green. Present family official save eye.', '2023-08-14 22:07:00', '2023-08-14 22:07:00'),
 (2, 'Class 2', 'static/image/classes/default.png', 'Plant religious most smile politics step business. Man trial condition it move bank hard full.\nOrganization imagine really positive voice sure education. Science most of enter live.', '2023-08-14 22:07:00', '2023-08-14 22:07:00'),
-(3, 'Class 3', 'static/image/classes/default.png', 'Federal fish worker model this no week. View anyone TV price weight. Pressure happen service no say back.', '2023-08-14 22:07:00', '2023-08-14 22:07:00');
+(3, 'Class 3', 'static/image/classes/default.png', 'Federal fish worker model this no week. View anyone TV price weight. Pressure happen service no say back.', '2023-08-14 22:07:00', '2023-08-14 22:07:00'),
+(9, 'asdasd', '9.', 'asdasffasdf', '2023-08-22 02:50:35', '2023-08-22 02:50:35'),
+(10, 'ASDASD', '10.png', 'ASDASD', '2023-08-22 03:04:27', '2023-08-22 03:04:27'),
+(11, 'ASDASD', '11.png', 'SADASD', '2023-08-22 03:05:00', '2023-08-22 03:05:00');
 
 -- --------------------------------------------------------
 
@@ -96,7 +99,7 @@ CREATE TABLE `materials` (
 --
 
 INSERT INTO `materials` (`id`, `subject_id`, `title`, `type`, `content`, `sequence`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Air administration adult reach.', 'penjelasan', 'Exist face hotel sure mention still. Evening outside be none east friend theory owner.', 1, '2023-08-14 22:07:00', '2023-08-14 22:07:00'),
+(1, 2, 'Air administration adult reach.', 'penjelasan', '0', 1, '2023-08-14 22:07:00', '2023-09-23 01:08:49'),
 (2, 1, 'According practice bit attention answer staff.', 'penjelasan', 'Record city become source report. Teacher answer food site south town.', 2, '2023-08-14 22:07:00', '2023-08-14 22:07:00'),
 (3, 1, 'Floor Mrs just.', 'video', 'Set race west month strategy. Partner treatment onto participant agent although. Past note now thus same.', 3, '2023-08-14 22:07:00', '2023-08-14 22:07:00'),
 (4, 1, 'Government eye that different may.', 'gambar', 'Any people say nation you surface. Tv fine impact history later number law.', 4, '2023-08-14 22:07:00', '2023-08-14 22:07:00'),
@@ -208,20 +211,21 @@ CREATE TABLE `pre_tests` (
 CREATE TABLE `subjects` (
   `id` int(11) NOT NULL,
   `subject_name` varchar(100) NOT NULL,
-  `description` text DEFAULT NULL,
+  `subject_description` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `image_url` varchar(255) DEFAULT NULL
+  `subject_image` varchar(255) DEFAULT NULL,
+  `subject_code` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `subjects`
 --
 
-INSERT INTO `subjects` (`id`, `subject_name`, `description`, `created_at`, `updated_at`, `image_url`) VALUES
-(1, 'firm', 'Three might piece build hard. How people phone through performance miss police nation.\nPolicy realize several continue live economic. Deal miss miss bed add thus thousand. Message of quickly.', '2023-08-14 22:07:00', '2023-08-14 22:07:00', NULL),
-(2, 'reach', 'Out nothing hour as land then. All force weight loss in return man.\nCheck hold charge lawyer situation.\nThus fine month without different. Father security act feeling.', '2023-08-14 22:07:00', '2023-08-14 22:07:00', NULL),
-(3, 'example', 'Forget court some color about fill fund. Benefit tough share design partner. North because discussion travel collection imagine somebody.', '2023-08-14 22:07:00', '2023-08-14 22:07:00', NULL);
+INSERT INTO `subjects` (`id`, `subject_name`, `subject_description`, `created_at`, `updated_at`, `subject_image`, `subject_code`) VALUES
+(1, 'firm', 'Three might piece build hard. How people phone through performance miss police nation.\nPolicy realize several continue live economic. Deal miss miss bed add thus thousand. Message of quickly.', '2023-08-14 22:07:00', '2023-08-31 00:56:52', NULL, 'SUB0001'),
+(2, 'reach', 'Out nothing hour as land then. All force weight loss in return man.\nCheck hold charge lawyer situation.\nThus fine month without different. Father security act feeling.', '2023-08-14 22:07:00', '2023-08-31 00:56:52', NULL, 'SUB0002'),
+(3, 'example', 'Forget court some color about fill fund. Benefit tough share design partner. North because discussion travel collection imagine somebody.', '2023-08-14 22:07:00', '2023-08-31 00:56:52', NULL, 'SUB0003');
 
 -- --------------------------------------------------------
 
@@ -234,7 +238,7 @@ CREATE TABLE `users` (
   `username` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('user','admin','guru') NOT NULL DEFAULT 'user',
+  `role` enum('student','admin','teacher') NOT NULL DEFAULT 'student',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `fullname` varchar(100) NOT NULL,
@@ -248,59 +252,45 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`, `updated_at`, `fullname`, `nisn`, `class_id`, `profile_url`) VALUES
-(1, 'rrobertson', 'julie75@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Christine Banks', '5315906126', 3, 'static/image/profile/default.png'),
-(2, 'heathkristina', 'susan53@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Shaun Aguilar', '2461851933', 3, 'static/image/profile/default.png'),
-(3, 'erika08', 'heather44@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Barbara Lang', '1004669420', 2, 'static/image/profile/default.png'),
-(4, 'rebecca46', 'rodriguezlori@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Marvin Moreno', '2678038984', 2, 'static/image/profile/default.png'),
-(5, 'wileyjames', 'justin93@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Christian Barker', '6967833015', 2, 'static/image/profile/default.png'),
-(6, 'sarahmorris', 'mollyjones@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Lisa Johnson', '1295512280', 1, 'static/image/profile/default.png'),
-(7, 'mitchellcraig', 'oharris@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Joshua Sexton', '2336554861', 2, 'static/image/profile/default.png'),
-(8, 'brewerdebbie', 'jwood@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Billy Mcbride', '9853326415', 3, 'static/image/profile/default.png'),
-(9, 'hillmark', 'coletyler@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Jeffrey Mccoy', '7117116022', 3, 'static/image/profile/default.png'),
-(10, 'dominguezsara', 'bharrison@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Jennifer Gill', '5524572145', 1, 'static/image/profile/default.png'),
-(11, 'matthew34', 'chad82@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Richard Davis', '3508192866', 3, 'static/image/profile/default.png'),
-(12, 'karen09', 'brianmurphy@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Paul Howard', '2559358428', 2, 'static/image/profile/default.png'),
-(13, 'rodneyhowe', 'mendezrebecca@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Michael Morgan', '7116988265', 3, 'static/image/profile/default.png'),
-(14, 'melvinshaw', 'paul94@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Martin Cobb', '8717650171', 3, 'static/image/profile/default.png'),
-(15, 'jamesbarrett', 'cgonzales@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Roger Summers', '2278287921', 1, 'static/image/profile/default.png'),
-(16, 'alex96', 'ajefferson@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Andrea Chaney', '7907633104', 2, 'static/image/profile/default.png'),
-(17, 'anachan', 'melissa40@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Joseph Adams', '8636619076', 1, 'static/image/profile/default.png'),
-(18, 'ramosstuart', 'ronald71@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Christopher Anderson', '4420582803', 1, 'static/image/profile/default.png'),
-(19, 'petersenjustin', 'vherrera@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Alyssa Shields DDS', '9995004733', 2, 'static/image/profile/default.png'),
-(20, 'lebenjamin', 'urodgers@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Aaron Martin', '9784499028', 3, 'static/image/profile/default.png'),
-(21, 'stephanie12', 'courtney86@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Zachary Bell', '7117223143', 2, 'static/image/profile/default.png'),
-(22, 'owhite', 'michael44@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Michelle Simpson', '8369179109', 2, 'static/image/profile/default.png'),
-(23, 'jporter', 'jennifer77@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Scott Stuart', '1883091900', 1, 'static/image/profile/default.png'),
-(24, 'mitchellalexis', 'bonniebowen@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Dean Velez', '3514025343', 2, 'static/image/profile/default.png'),
-(25, 'kayla26', 'colton19@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Dana Bailey', '4048311188', 3, 'static/image/profile/default.png'),
-(26, 'joelstewart', 'brownashley@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Lisa Howe', '7916921045', 3, 'static/image/profile/default.png'),
-(27, 'maldonadojohn', 'aspencer@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Jennifer Davis', '1089253434', 1, 'static/image/profile/default.png'),
-(28, 'sabrina25', 'bobby62@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Brian Smith', '5288324133', 2, 'static/image/profile/default.png'),
-(29, 'rachael75', 'yphelps@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Matthew Wong', '1062081755', 1, 'static/image/profile/default.png'),
-(30, 'pwade', 'wagnercheryl@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Betty Harmon', '2747789977', 1, 'static/image/profile/default.png'),
-(31, 'williamsbrandon', 'mcox@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Francisco Dawson', '7008667109', 3, 'static/image/profile/default.png'),
-(32, 'kathy59', 'joseph42@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Theresa Hernandez', '2309547775', 3, 'static/image/profile/default.png'),
-(33, 'oliverbrandon', 'christopher63@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Victor Stephenson', '8107189163', 3, 'static/image/profile/default.png'),
-(34, 'brandon91', 'brownlogan@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Jeremy Small', '8049387155', 3, 'static/image/profile/default.png'),
-(35, 'sanchezbrian', 'brandonyoung@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Duane Duncan', '1075375802', 1, 'static/image/profile/default.png'),
-(36, 'hyoung', 'susannovak@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Blake Moyer', '6619850934', 1, 'static/image/profile/default.png'),
-(37, 'xrodriguez', 'ronaldwright@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Jacob Russo', '4611979189', 3, 'static/image/profile/default.png'),
-(38, 'brianyoung', 'victoria37@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Luis Carr', '8306798447', 3, 'static/image/profile/default.png'),
-(39, 'williamsjohn', 'jamesdavis@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Kayla Murillo', '6442338857', 2, 'static/image/profile/default.png'),
-(40, 'jmiller', 'ahall@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Deborah Hudson', '9882897875', 3, 'static/image/profile/default.png'),
-(41, 'karentaylor', 'grimescatherine@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Dustin Jenkins', '4311166501', 2, 'static/image/profile/default.png'),
-(42, 'ngarza', 'reneeking@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Thomas Price', '6466875047', 1, 'static/image/profile/default.png'),
-(43, 'natalietaylor', 'hcurtis@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Linda Simpson', '4935197594', 2, 'static/image/profile/default.png'),
-(44, 'johnhoward', 'clarksteven@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Daniel Nelson', '8207440730', 2, 'static/image/profile/default.png'),
-(45, 'lowedavid', 'nicolefoster@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Stephanie Harrison', '8475751521', 3, 'static/image/profile/default.png'),
-(46, 'xbishop', 'sarah54@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Marcus Montgomery', '3791059693', 1, 'static/image/profile/default.png'),
-(47, 'jonesscott', 'justincarroll@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Marcus Sanchez', '6295142640', 3, 'static/image/profile/default.png'),
-(48, 'wscott', 'williamsterri@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Christina Arnold', '3683671269', 2, 'static/image/profile/default.png'),
-(49, 'alice17', 'combsjames@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Jeremy Anderson', '3164182860', 2, 'static/image/profile/default.png'),
-(50, 'amanda25', 'kimberly78@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Lynn Bennett', '5508706932', 1, 'static/image/profile/default.png'),
-(51, 'asmith', 'terrenceperry@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Amy Moore', NULL, NULL, 'static/image/profile/default.png'),
-(52, 'stevehernandez', 'williamstyler@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'guru', '2023-08-14 22:07:00', '2023-08-14 22:26:04', 'Tammy Knight', NULL, NULL, 'static/image/profile/default.png'),
-(53, 'ikimukti', 'iki.mukti@gmail.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'user', '2023-08-15 06:16:18', '2023-08-15 06:16:18', 'Firmansyah Mukti Wijaya', 'dafault', NULL, 'static/image/profile/default.png');
+(1, 'rrobertsonss', 'julie75@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 01:42:39', 'Christine Banks', '1235906126', 3, 'static/image/profile/student_594787ac9aecf6d4a5dcf95efb7a272ab824061d837b7e99624982c73407dffc.png'),
+(2, 'heathkristina', 'susan53@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Shaun Aguilar', '2461851933', 3, 'static/image/profile/default.png'),
+(3, 'erika08', 'heather44@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Barbara Lang', '1004669420', 2, 'static/image/profile/default.png'),
+(4, 'rebecca46', 'rodriguezlori@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'teacher', '2023-08-14 22:07:00', '2023-08-22 02:38:45', 'Marvin Moreno', '2678038984', 2, 'static/image/profile/default.png'),
+(5, 'wileyjames', 'justin93@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'teacher', '2023-08-14 22:07:00', '2023-08-22 02:38:59', 'Christian Barker', '6967833015', 2, 'static/image/profile/default.png'),
+(6, 'sarahmorris', 'mollyjones@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Lisa Johnson', '1295512280', 1, 'static/image/profile/default.png'),
+(7, 'mitchellcraig', 'oharris@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Joshua Sexton', '2336554861', 2, 'static/image/profile/default.png'),
+(8, 'brewerdebbie', 'jwood@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Billy Mcbride', '9853326415', 3, 'static/image/profile/default.png'),
+(10, 'dominguezsara', 'bharrison@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Jennifer Gill', '5524572145', 1, 'static/image/profile/default.png'),
+(11, 'matthew34', 'chad82@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-31 00:03:39', 'Richard Daviss', '7415500328', 3, 'static/image/profile/default.png'),
+(12, 'karen09', 'brianmurphy@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Paul Howard', '2559358428', 2, 'static/image/profile/default.png'),
+(13, 'rodneyhowe', 'mendezrebecca@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'teacher', '2023-08-14 22:07:00', '2023-08-22 02:38:59', 'Michael Morgan', '7116988265', 3, 'static/image/profile/default.png'),
+(14, 'melvinshaw', 'paul94@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Martin Cobb', '8717650171', 3, 'static/image/profile/default.png'),
+(16, 'alex96', 'ajefferson@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Andrea Chaney', '7907633104', 2, 'static/image/profile/default.png'),
+(17, 'anachan', 'melissa40@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Joseph Adams', '8636619076', 1, 'static/image/profile/default.png'),
+(18, 'ramosstuart', 'ronald71@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Christopher Anderson', '4420582803', 1, 'static/image/profile/default.png'),
+(19, 'petersenjustin', 'vherrera@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'teacher', '2023-08-14 22:07:00', '2023-08-22 02:38:59', 'Alyssa Shields DDS', '9995004733', 2, 'static/image/profile/default.png'),
+(21, 'stephanie12', 'courtney86@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Zachary Bell', '7117223143', 2, 'static/image/profile/default.png'),
+(22, 'owhite', 'michael44@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'teacher', '2023-08-14 22:07:00', '2023-08-22 02:38:59', 'Michelle Simpson', '8369179109', 2, 'static/image/profile/default.png'),
+(23, 'jporter', 'jennifer77@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Scott Stuart', '1883091900', 1, 'static/image/profile/default.png'),
+(24, 'mitchellalexissssss', 'bonniebowen@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-31 00:03:57', 'Dean Velez', '2065309821', 2, 'static/image/profile/default.png'),
+(25, 'kayla26', 'colton19@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Dana Bailey', '4048311188', 3, 'static/image/profile/default.png'),
+(26, 'joelstewart', 'brownashley@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Lisa Howe', '7916921045', 3, 'static/image/profile/default.png'),
+(28, 'sabrina25', 'bobby62@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'teacher', '2023-08-14 22:07:00', '2023-08-22 02:38:59', 'Brian Smith', '5288324133', 2, 'static/image/profile/default.png'),
+(29, 'rachael75', 'yphelps@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'teacher', '2023-08-14 22:07:00', '2023-08-22 02:38:59', 'Matthew Wong', '1062081755', 1, 'static/image/profile/default.png'),
+(30, 'pwade', 'wagnercheryl@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'teacher', '2023-08-14 22:07:00', '2023-08-22 02:38:59', 'Betty Harmon', '2747789977', 1, 'static/image/profile/default.png'),
+(31, 'williamsbrandonasdas', 'mcox@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-31 00:05:21', 'Francisco Dawson', '7532219980', 3, 'static/image/profile/default.png'),
+(33, 'oliverbrandons', 'christopher63@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'teacher', '2023-08-14 22:07:00', '2023-08-31 00:06:27', 'Victor Stephenson', '9469475305', 3, 'static/image/profile/default.png'),
+(35, 'sanchezbrian', 'brandonyoung@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Duane Duncan', '1075375802', 1, 'static/image/profile/default.png'),
+(37, 'xrodriguez', 'ronaldwright@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Jacob Russo', '4611979189', 3, 'static/image/profile/default.png'),
+(39, 'williamsjohnasdasdas', 'jamesdavis@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-31 00:04:53', 'Kayla Murillo', '5140217534', 2, 'static/image/profile/default.png'),
+(42, 'ngarza', 'reneeking@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Thomas Price', '6466875047', 1, 'static/image/profile/default.png'),
+(43, 'natalietaylorasdasda', 'hcurtis@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-31 00:04:21', 'Linda Simpson', '1738719994', 2, 'static/image/profile/default.png'),
+(44, 'johnhoward', 'clarksteven@example.net', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Daniel Nelson', '8207440730', 2, 'static/image/profile/default.png'),
+(46, 'xbishop', 'sarah54@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Marcus Montgomery', '3791059693', 1, 'static/image/profile/default.png'),
+(47, 'jonesscott', 'justincarroll@example.org', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Marcus Sanchez', '6295142640', 3, 'static/image/profile/default.png'),
+(48, 'wscott', 'williamsterri@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'student', '2023-08-14 22:07:00', '2023-08-30 00:32:06', 'Christina Arnold', '3683671269', 2, 'static/image/profile/default.png'),
+(52, 'stevehernandez', 'williamstyler@example.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'teacher', '2023-08-14 22:07:00', '2023-08-22 02:38:59', 'Tammy Knight', NULL, NULL, 'static/image/profile/default.png'),
+(53, 'ikimukti', 'iki.mukti@gmail.com', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 'admin', '2023-08-15 06:16:18', '2023-08-22 02:38:04', 'Firmansyah Mukti Wijaya', 'dafault', NULL, 'static/image/profile/default.png');
 
 --
 -- Indexes for dumped tables
@@ -347,7 +337,8 @@ ALTER TABLE `pre_tests`
 -- Indexes for table `subjects`
 --
 ALTER TABLE `subjects`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_subject_code` (`subject_code`);
 
 --
 -- Indexes for table `users`
@@ -365,7 +356,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `classes_subjects`
@@ -377,7 +368,7 @@ ALTER TABLE `classes_subjects`
 -- AUTO_INCREMENT for table `materials`
 --
 ALTER TABLE `materials`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `post_tests`
@@ -395,13 +386,13 @@ ALTER TABLE `pre_tests`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- Constraints for dumped tables
