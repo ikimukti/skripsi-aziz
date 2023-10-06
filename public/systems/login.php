@@ -77,7 +77,7 @@ $conn->close();
     <!-- Top Navbar -->
     <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6">
         <div class="flex items-center flex-shrink-0 text-white mr-6">
-            <a href="/skripsi-aziz/public/index.php">
+            <a href="/public/index.php">
                 <span class="font-semibold text-xl tracking-tight">Skripsi Aziz</span>
             </a>
         </div>
@@ -97,7 +97,7 @@ $conn->close();
                 </a>
             </div>
             <div>
-                <a href="/skripsi-aziz/public/systems/register.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Register</a>
+                <a href="/public/systems/register.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Register</a>
             </div>
         </div>
     </nav>

@@ -13,7 +13,7 @@
 2. Clone this repository
 
     ``` bash
-    git clone https://github.com/ikimukti/skripsi-aziz.git
+    git clone https://github.com/ikimukti.git
     ```
 
 3. Go to directory skripsi-aziz
