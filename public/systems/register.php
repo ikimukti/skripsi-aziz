@@ -1,6 +1,6 @@
 <?php
 // Include the connection file
-require_once('../../database/connection.php');
+require_once('database/connection.php');
 
 // Initialize variables
 $username = $password = '';
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Add session success message
             $_SESSION['success'] = 'Registration successful.';
-            header('Location: ../systems/login.php');
+            header('Location: systems/login.php');
             exit();
         } else {
             $errors['registration_failed'] = 'Failed to register user.';
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<?php include_once('../components/header.php'); ?>
+<?php include_once('components/header.php'); ?>
 <!-- Main Content Height Menyesuaikan Hasil Kurang dari Header dan Footer -->
 <div class="h-screen flex flex-col">
     <!-- Top Navbar -->
@@ -143,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endforeach;
                     }
                     ?>
-                    <form action="../systems/register.php" method="POST" class="mb-6">
+                    <form action="systems/register.php" method="POST" class="mb-6">
                         <label for="username" class="block text-left text-gray-600 mb-2">Username</label>
                         <input type="text" id="username" name="username" class="border border-gray-300 rounded-full px-4 py-2 w-full mb-2" required>
 
@@ -163,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             Register
                         </button>
                     </form>
-                    <p class="text-gray-500 text-sm">Already have an account? <a href="../systems/login.php" class="text-blue-500">Click here to login</a></p>
+                    <p class="text-gray-500 text-sm">Already have an account? <a href="systems/login.php" class="text-blue-500">Click here to login</a></p>
                 </div>
             </div>
         </div>

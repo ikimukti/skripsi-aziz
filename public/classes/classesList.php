@@ -2,23 +2,23 @@
 // Initialize the session
 session_start();
 // Include the connection file
-require_once('../../database/connection.php');
+require_once('database/connection.php');
 
 // Initialize variables
 $username = $password = '';
 $errors = array();
 
 ?>
-<?php include_once('../components/header.php'); ?>
+<?php include_once('components/header.php'); ?>
 <!-- Main Content Height Menyesuaikan Hasil Kurang dari Header dan Footer -->
 <div class="h-screen flex flex-col">
     <!-- Top Navbar -->
-    <?php include('../components/navbar.php'); ?>
+    <?php include('components/navbar.php'); ?>
     <!-- End Top Navbar -->
     <!-- Main Content -->
     <div class="flex-grow bg-gray-50 flex flex-row shadow-md">
         <!-- Sidebar -->
-        <?php include('../components/sidebar.php'); ?>
+        <?php include('components/sidebar.php'); ?>
         <!-- End Sidebar -->
 
         <!-- Main Content -->
@@ -28,7 +28,7 @@ $errors = array();
                 <div class="flex flex-row justify-between items-center w-full border-b-2 border-gray-600 mb-2 pb-2">
                     <h1 class="text-3xl text-gray-800 font-semibol w-full">Classes</h1>
                     <div class="flex flex-row justify-end items-center">
-                        <a href="../classes/classesCreate.php" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+                        <a href="classes/classesCreate.php" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
                             <i class="fas fa-plus mr-2"></i>
                             <span>Create</span>
                         </a>
@@ -89,29 +89,29 @@ $errors = array();
                                     <td class="py-2"><?php echo substr($row['description'], 0, 50) . '...'; ?></td>
                                     <td class="py-2"><?php echo date('M j, Y H:i:s', strtotime($row['updated_at'])); ?></td>
                                     <td class='py-2'>
-                                        <a href="../classes/classesDetail.php?id=<?php echo $row['id']?>" class='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
+                                        <a href="classes/classesDetail.php?id=<?php echo $row['id'] ?>" class='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
                                             <i class='fas fa-eye mr-2'></i>
                                             <span>Detail</span>
                                         </a>
-                                        <a href="../classes/classesUpdate.php?id=<?php echo $row['id']?>" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
+                                        <a href="classes/classesUpdate.php?id=<?php echo $row['id'] ?>" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
                                             <i class='fas fa-edit mr-2'></i>
                                             <span>Edit</span>
                                         </a>
-                                        <a href="../classes/ClassesDelete.php?id=<?php echo $row['id']?>" class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-flex items-center text-sm'>
+                                        <a href="classes/ClassesDelete.php?id=<?php echo $row['id'] ?>" class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-flex items-center text-sm'>
                                             <i class='fas fa-trash mr-2'></i>
                                             <span>Delete</span>
                                         </a>
                                     </td>
                                 </tr>
-                                <?php
-                                }
-                                if ($result->num_rows === 0) {
-                                ?>
-                                    <tr>
-                                        <td colspan="5" class="py-2 text-center">No data found.</td>
-                                    </tr>
-                                <?php
-                                }
+                            <?php
+                            }
+                            if ($result->num_rows === 0) {
+                            ?>
+                                <tr>
+                                    <td colspan="5" class="py-2 text-center">No data found.</td>
+                                </tr>
+                            <?php
+                            }
                             ?>
                         </tbody>
                     </table>
@@ -119,59 +119,59 @@ $errors = array();
                     <?php
                     // Pagination
                     ?>
-                        <div class="flex flex-row justify-between items-center w-full mt-4">
-                            <div class="flex flex-row justify-start items-center">
-                                <span class="text-gray-600">Total <?php echo $rowCount; ?> rows</span>
-                            </div>
-                            <div class="flex flex-row justify-end items-center space-x-2">
-                                <a href="?page=1&search=<?php echo $searchTerm; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
-                                    <i class="fas fa-angle-double-left"></i>
-                                </a>
-                                <a href="?page=<?php if ($page == 1) {
-                                                    echo $page;
-                                                } else {
-                                                    echo $page - 1;
-                                                } ?>&search=<?php echo $searchTerm; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
-                                    <i class="fas fa-angle-left"></i>
-                                </a>
-                                <!-- Page number -->
-                                <?php
-                                $startPage = $page - 2;
-                                $endPage = $page + 2;
-                                if ($startPage < 1) {
-                                    $endPage += abs($startPage) + 1;
-                                    $startPage = 1;
-                                }
-                                if ($endPage > $totalPage) {
-                                    $startPage -= $endPage - $totalPage;
-                                    $endPage = $totalPage;
-                                }
-                                if ($startPage < 1) {
-                                    $startPage = 1;
-                                }
-                                for ($i = $startPage; $i <= $endPage; $i++) {
-                                    if ($i == $page) {
-                                        echo "<a href='?page=$i&search=$searchTerm' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center'>$i</a>";
-                                    } else {
-                                        echo "<a href='?page=$i&search=$searchTerm' class='bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center'>$i</a>";
-                                    }
-                                }
-                                ?>
-                                <a href="?page=<?php if ($page == $totalPage) {
-                                                    echo $page;
-                                                } else {
-                                                    echo $page + 1;
-                                                } ?>&search=<?php echo $searchTerm; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
-                                    <i class="fas fa-angle-right"></i>
-                                </a>
-                                <a href="?page=<?php echo $totalPage; ?>&search=<?php echo $searchTerm; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
-                                    <i class="fas fa-angle-double-right"></i>
-                                </a>
-                            </div>
-                            <div class="flex flex-row justify-end items-center ml-2">
-                                <span class="text-gray-600">Page <?php echo $page; ?> of <?php echo $totalPage; ?></span>
-                            </div>
+                    <div class="flex flex-row justify-between items-center w-full mt-4">
+                        <div class="flex flex-row justify-start items-center">
+                            <span class="text-gray-600">Total <?php echo $rowCount; ?> rows</span>
                         </div>
+                        <div class="flex flex-row justify-end items-center space-x-2">
+                            <a href="?page=1&search=<?php echo $searchTerm; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
+                                <i class="fas fa-angle-double-left"></i>
+                            </a>
+                            <a href="?page=<?php if ($page == 1) {
+                                                echo $page;
+                                            } else {
+                                                echo $page - 1;
+                                            } ?>&search=<?php echo $searchTerm; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
+                                <i class="fas fa-angle-left"></i>
+                            </a>
+                            <!-- Page number -->
+                            <?php
+                            $startPage = $page - 2;
+                            $endPage = $page + 2;
+                            if ($startPage < 1) {
+                                $endPage += abs($startPage) + 1;
+                                $startPage = 1;
+                            }
+                            if ($endPage > $totalPage) {
+                                $startPage -= $endPage - $totalPage;
+                                $endPage = $totalPage;
+                            }
+                            if ($startPage < 1) {
+                                $startPage = 1;
+                            }
+                            for ($i = $startPage; $i <= $endPage; $i++) {
+                                if ($i == $page) {
+                                    echo "<a href='?page=$i&search=$searchTerm' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center'>$i</a>";
+                                } else {
+                                    echo "<a href='?page=$i&search=$searchTerm' class='bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center'>$i</a>";
+                                }
+                            }
+                            ?>
+                            <a href="?page=<?php if ($page == $totalPage) {
+                                                echo $page;
+                                            } else {
+                                                echo $page + 1;
+                                            } ?>&search=<?php echo $searchTerm; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
+                                <i class="fas fa-angle-right"></i>
+                            </a>
+                            <a href="?page=<?php echo $totalPage; ?>&search=<?php echo $searchTerm; ?>" class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded inline-flex items-center">
+                                <i class="fas fa-angle-double-right"></i>
+                            </a>
+                        </div>
+                        <div class="flex flex-row justify-end items-center ml-2">
+                            <span class="text-gray-600">Page <?php echo $page; ?> of <?php echo $totalPage; ?></span>
+                        </div>
+                    </div>
                 </div>
                 <!-- End Content -->
         </main>
@@ -179,7 +179,7 @@ $errors = array();
     </div>
     <!-- End Main Content -->
     <!-- Footer -->
-    <?php include('../components/footer.php'); ?>
+    <?php include('components/footer.php'); ?>
     <!-- End Footer -->
 </div>
 <!-- End Main Content -->

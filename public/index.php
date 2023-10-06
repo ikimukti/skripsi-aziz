@@ -47,7 +47,7 @@ if (isset($_SESSION['user_id'])) {
             <div class="text-center px-40">
                 <h1 class="text-6xl font-bold text-gray-700 mb-10">Skripsi Aziz</h1>
                 <p class="text-gray-500 mb-10 text-xl">Pengembangan Media Pembelajaran Berbasis Web Menggunakan Metode Multimedia Interaktif Untuk Meningkatkan Hasil Belajar Siswa Pada Mata Pelajaran Pemrograman Web</p>
-                <a href="../public/systems/login.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                <a href="public/systems/login.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                     Get Started
                 </a>
             </div>

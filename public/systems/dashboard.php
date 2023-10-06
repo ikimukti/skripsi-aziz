@@ -2,7 +2,7 @@
 // Initialize the session
 session_start();
 // Include the connection file
-require_once('../../database/connection.php');
+require_once('database/connection.php');
 
 // Initialize variables
 $username = $password = '';
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['fullname'] = $row['fullname'];
 
             // Redirect to a dashboard or homepage
-            header('Location: ../systems/dashboard.php');
+            header('Location: systems/dashboard.php');
             exit();
         } else {
             $errors['login_failed'] = 'Invalid username or password.';
@@ -59,16 +59,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Close the database connection
 $conn->close();
 ?>
-<?php include('../components/header.php'); ?>
+<?php include('components/header.php'); ?>
 <!-- Main Content Height Menyesuaikan Hasil Kurang dari Header dan Footer -->
 <div class="h-screen flex flex-col">
     <!-- Top Navbar -->
-    <?php include('../components/navbar.php'); ?>
+    <?php include('components/navbar.php'); ?>
     <!-- End Top Navbar -->
     <!-- Main Content -->
     <div class="bg-gray-50 flex flex-row shadow-md">
         <!-- Sidebar -->
-        <?php include('../components/sidebar.php'); ?>
+        <?php include('components/sidebar.php'); ?>
         <!-- End Sidebar -->
         <!-- Main Content -->
         <main class=" bg-gray-50 flex flex-col flex-1">
@@ -165,7 +165,7 @@ $conn->close();
     </div>
     <!-- End Main Content -->
     <!-- Footer -->
-    <?php include('../components/footer.php'); ?>
+    <?php include('components/footer.php'); ?>
     <!-- End Footer -->
 </div>
 <!-- End Main Content -->

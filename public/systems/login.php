@@ -1,7 +1,7 @@
 <?php
 session_start();
 // Include the connection file
-require_once('../../database/connection.php');
+require_once('database/connection.php');
 
 // Initialize variables
 $username = $password = '';
@@ -10,7 +10,7 @@ $errors = array();
 // Check if the user is already logged in
 if (isset($_SESSION['user_id'])) {
     // If user is already logged in, redirect to dashboard
-    header('Location: ../systems/dashboard.php');
+    header('Location: systems/dashboard.php');
     exit();
 }
 
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // Redirect to a dashboard or homepage
-            header('Location: ../systems/dashboard.php');
+            header('Location: systems/dashboard.php');
             exit();
         } else {
             $errors['login_failed'] = 'Invalid username or password.';
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Close the database connection
 $conn->close();
 ?>
-<?php include_once('../components/header.php'); ?>
+<?php include_once('components/header.php'); ?>
 <!-- Main Content Height Menyesuaikan Hasil Kurang dari Header dan Footer -->
 <div class="h-screen flex flex-col">
     <!-- Top Navbar -->
@@ -137,8 +137,8 @@ $conn->close();
                             Log In
                         </button>
                     </form>
-                    <p class="text-gray-500 text-sm">Forgot your password? <a href="../systems/forgot-password.php" class="text-blue-500">Click here</a></p>
-                    <p class="text-gray-500 text-sm">Don't have an account? <a href="../systems/register.php" class="text-blue-500">Register here</a></p>
+                    <p class="text-gray-500 text-sm">Forgot your password? <a href="systems/forgot-password.php" class="text-blue-500">Click here</a></p>
+                    <p class="text-gray-500 text-sm">Don't have an account? <a href="systems/register.php" class="text-blue-500">Register here</a></p>
                 </div>
             </div>
         </div>

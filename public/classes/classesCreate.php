@@ -2,7 +2,7 @@
 // Initialize the session
 session_start();
 
-require_once('../../database/connection.php');
+require_once('database/connection.php');
 
 // Initialize errors array
 $errors = array();
@@ -53,12 +53,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // If no errors, insert data into the database
     if (empty($errors)) {
         $sql = "INSERT INTO classes (classes_name, description) VALUES ('$class_name', '$description')";
-        
+
         if ($conn->query($sql) === TRUE) {
             // Insertion successful
             $last_id = $conn->insert_id;
             $file_name = $last_id . '.' . $file_ext;
-            $file_path = '../static/image/class/' . $file_name;
+            $file_path = 'static/image/class/' . $file_name;
             $sql = "UPDATE classes SET classes_image = '$file_name' WHERE id = '$last_id'";
             if ($conn->query($sql) === TRUE) {
                 move_uploaded_file($file_tmp, $file_path);
@@ -76,16 +76,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Close database connection
 $conn->close();
 ?>
-<?php include_once('../components/header.php'); ?>
+<?php include_once('components/header.php'); ?>
 <!-- Main Content Height Menyesuaikan Hasil Kurang dari Header dan Footer -->
 <div class="h-screen flex flex-col">
     <!-- Top Navbar -->
-    <?php include('../components/navbar.php'); ?>
+    <?php include('components/navbar.php'); ?>
     <!-- End Top Navbar -->
     <!-- Main Content -->
     <div class="flex-grow bg-gray-50 flex flex-row shadow-md">
         <!-- Sidebar -->
-        <?php include('../components/sidebar.php'); ?>
+        <?php include('components/sidebar.php'); ?>
         <!-- End Sidebar -->
 
         <!-- Main Content -->
@@ -94,7 +94,7 @@ $conn->close();
                 <!-- Header Content -->
                 <div class="flex flex-row justify-between items-center w-full border-b-2 border-gray-600 mb-2 pb-2">
                     <h1 class="text-3xl text-gray-800 font-semibold w-full">Create Class</h1>
-                    <a href="../classes/classesList.php" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center space-x-2">
+                    <a href="classes/classesList.php" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center space-x-2">
                         <i class="fas fa-arrow-left"></i>
                         <span>Back</span>
                     </a>
@@ -161,7 +161,7 @@ $conn->close();
     </main>
 </div>
 <!-- Footer -->
-<?php include('../components/footer.php'); ?>
+<?php include('components/footer.php'); ?>
 <!-- End Footer -->
 </div>
 <!-- End Main Content -->

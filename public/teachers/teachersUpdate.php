@@ -2,7 +2,7 @@
 // Initialize the session
 session_start();
 
-require_once('../../database/connection.php');
+require_once('database/connection.php');
 
 // Initialize errors array
 // SELECT `id`, `username`, `email`, `password`, `role`, `created_at`, `updated_at`, `fullname`, `nisn`, `class_id`, `profile_url` FROM `users` WHERE 1
@@ -19,12 +19,12 @@ if (isset($_GET['id'])) {
   $user = $result->fetch_assoc();
   if (!$user) {
     // Redirect to an error page or suitable location
-    header('Location: ../error.php');
+    header('Location: error.php');
     exit();
   }
 } else {
   // Redirect to an error page or suitable location
-  header('Location: ../error.php');
+  header('Location: error.php');
   exit();
 }
 // Process form submission update data
@@ -149,11 +149,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
       // Upload image file if not default and not same with before
       if (!empty($_FILES['profile_url']['name']) && $file_name != $user['profile_url']) {
-        move_uploaded_file($file_tmp, '../' . $profile_url);
-        unlink('../' . $user['profile_url']);
+        move_uploaded_file($file_tmp, '' . $profile_url);
+        unlink('' . $user['profile_url']);
       }
       // Redirect to a success page or suitable location
-      header('Location: ../teachers/teachersList.php');
+      header('Location: teachers/teachersList.php');
       exit();
     } else {
       // Handle the update failure, perhaps show an error message
@@ -167,16 +167,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Close database connection
 $conn->close();
 ?>
-<?php include_once('../components/header.php'); ?>
+<?php include_once('components/header.php'); ?>
 <!-- Main Content Height Menyesuaikan Hasil Kurang dari Header dan Footer -->
 <div class="h-screen flex flex-col">
   <!-- Top Navbar -->
-  <?php include('../components/navbar.php'); ?>
+  <?php include('components/navbar.php'); ?>
   <!-- End Top Navbar -->
   <!-- Main Content -->
   <div class="flex-grow bg-gray-50 flex flex-row shadow-md">
     <!-- Sidebar -->
-    <?php include('../components/sidebar.php'); ?>
+    <?php include('components/sidebar.php'); ?>
     <!-- End Sidebar -->
 
     <!-- Main Content -->
@@ -185,7 +185,7 @@ $conn->close();
         <!-- Header Content -->
         <div class="flex flex-row justify-between items-center w-full border-b-2 border-gray-600 mb-2 pb-2">
           <h1 class="text-3xl text-gray-800 font-semibold w-full">Update Teacher</h1>
-          <a href="../teachers/teachersList.php" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center space-x-2">
+          <a href="teachers/teachersList.php" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center space-x-2">
             <i class="fas fa-arrow-left"></i>
             <span>Back</span>
           </a>
@@ -264,7 +264,7 @@ $conn->close();
   </main>
 </div>
 <!-- Footer -->
-<?php include('../components/footer.php'); ?>
+<?php include('components/footer.php'); ?>
 <!-- End Footer -->
 </div>
 <!-- End Main Content -->

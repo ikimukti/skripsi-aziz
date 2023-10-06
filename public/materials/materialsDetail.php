@@ -1,12 +1,12 @@
 <?php
 session_start();
-require_once('../../database/connection.php');
-include_once('../components/header.php');
+require_once('database/connection.php');
+include_once('components/header.php');
 
 // Check if the ID is provided in the query parameter
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
   // Redirect to an error page or suitable location
-  header('Location: ../error.php');
+  header('Location: error.php');
   exit();
 }
 
@@ -21,7 +21,7 @@ $result = $stmt->get_result();
 // Check if the material exists
 if ($result->num_rows !== 1) {
   // Redirect to an error page or suitable location
-  header('Location: ../error.php');
+  header('Location: error.php');
   exit();
 }
 
@@ -32,18 +32,18 @@ $material = $result->fetch_assoc();
 <!-- Start HTML content for materialsDetail.php -->
 <div class="h-screen flex flex-col">
   <!-- Top Navbar -->
-  <?php include('../components/navbar.php'); ?>
+  <?php include('components/navbar.php'); ?>
   <!-- End Top Navbar -->
 
   <!-- Main Content -->
   <div class="flex-grow bg-gray-50 flex flex-row shadow-md">
     <!-- Sidebar -->
-    <?php include('../components/sidebar.php'); ?>
+    <?php include('components/sidebar.php'); ?>
     <!-- End Sidebar -->
     <main class="bg-gray-50 flex flex-col flex-1 overflow-y-scroll h-screen w-screen sc-hide scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200 p-6">
       <div class="flex items-start justify-beetween mb-6 flex-row">
         <h1 class="text-3xl text-gray-800 font-semibold w-full">Material Details - <?php echo $material['title']; ?></h1>
-        <a href="../materials/materialsList.php" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center space-x-2">
+        <a href="materials/materialsList.php" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center space-x-2">
           <i class="fas fa-arrow-left"></i>
           <span>Back</span>
         </a>
@@ -66,12 +66,12 @@ $material = $result->fetch_assoc();
   <!-- End Main Content -->
 
   <!-- Footer -->
-  <?php include('../components/footer.php'); ?>
+  <?php include('components/footer.php'); ?>
   <!-- End Footer -->
 </div>
 <!-- End HTML content for materialsDetail.php -->
 
 <?php
 $stmt->close();
-include_once('../components/footer.php');
+include_once('components/footer.php');
 ?>

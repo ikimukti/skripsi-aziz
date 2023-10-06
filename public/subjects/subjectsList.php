@@ -2,23 +2,23 @@
 // Initialize the session
 session_start();
 // Include the connection file
-require_once('../../database/connection.php');
+require_once('database/connection.php');
 
 // Initialize variables
 $username = $password = '';
 $errors = array();
 // Close the database connection
 ?>
-<?php include_once('../components/header.php'); ?>
+<?php include_once('components/header.php'); ?>
 <!-- Main Content Height Menyesuaikan Hasil Kurang dari Header dan Footer -->
 <div class="h-screen flex flex-col">
   <!-- Top Navbar -->
-  <?php include('../components/navbar.php'); ?>
+  <?php include('components/navbar.php'); ?>
   <!-- End Top Navbar -->
   <!-- Main Content -->
   <div class="flex-grow bg-gray-50 flex flex-row shadow-md">
     <!-- Sidebar -->
-    <?php include('../components/sidebar.php'); ?>
+    <?php include('components/sidebar.php'); ?>
     <!-- End Sidebar -->
 
     <!-- Main Content -->
@@ -28,7 +28,7 @@ $errors = array();
         <div class="flex flex-row justify-between items-center w-full border-b-2 border-gray-600 mb-2 pb-2">
           <h1 class="text-3xl text-gray-800 font-semibol w-full">Subjects List</h1>
           <div class="flex flex-row justify-end items-center">
-            <a href="../subjects/subjectsCreate.php" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+            <a href="subjects/subjectsCreate.php" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
               <i class="fas fa-plus mr-2"></i>
               <span>Create</span>
             </a>
@@ -105,17 +105,17 @@ $errors = array();
                   <td class="py-2"><?php echo substr($row['subject_description'], 0, 50); ?>...</td>
                   <td class='py-2'>
                     <!--  Detail Button -->
-                    <a href="../subjects/subjectsDetail.php?id=<?php echo $row['id'] ?>" class='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
+                    <a href="subjects/subjectsDetail.php?id=<?php echo $row['id'] ?>" class='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
                       <i class='fas fa-eye mr-2'></i>
                       <span>Detail</span>
                     </a>
                     <!--  Edit Button -->
-                    <a href="../subjects/subjectsUpdate.php?id=<?php echo $row['id'] ?>" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
+                    <a href="subjects/subjectsUpdate.php?id=<?php echo $row['id'] ?>" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
                       <i class='fas fa-edit mr-2'></i>
                       <span>Edit</span>
                     </a>
                     <!--  Delete Button -->
-                    <a href="../subjects/subjectsDelete.php?id=<?php echo $row['id'] ?>" class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-flex items-center text-sm'>
+                    <a href="subjects/subjectsDelete.php?id=<?php echo $row['id'] ?>" class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-flex items-center text-sm'>
                       <i class='fas fa-trash mr-2'></i>
                       <span>Delete</span>
                     </a>
@@ -200,7 +200,7 @@ $errors = array();
   </div>
   <!-- End Main Content -->
   <!-- Footer -->
-  <?php include('../components/footer.php'); ?>
+  <?php include('components/footer.php'); ?>
   <!-- End Footer -->
 </div>
 <!-- End Main Content -->
