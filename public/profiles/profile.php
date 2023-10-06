@@ -81,7 +81,7 @@ $conn->close();
                 <div class="flex flex-row w-full space-x-2 space-y-2 mt-4 mb-4">
                     <!-- Image Profile -->
                     <div class="flex flex-col w-96 h-96 items-center justify-center pt-4">
-                        <img src="/public/static/image/profile/default.jpg" alt="default" class="rounded-md w-full h-full object-cover">
+                        <img src="//public/static/image/profile/default.jpg" alt="default" class="rounded-md w-full h-full object-cover">
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 w-full">
                             Change Image
                         </button>
