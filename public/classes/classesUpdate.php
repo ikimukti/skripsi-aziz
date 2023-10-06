@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once('database/connection.php');
-include_once('components/header.php');
+require_once('../../database/connection.php');
+include_once('../components/header.php');
 
 // Initialize variables
 $class_name = $class_image = $description = '';
@@ -85,13 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!-- Start HTML content for classesUpdate.php -->
 <div class="h-screen flex flex-col">
     <!-- Top Navbar -->
-    <?php include('components/navbar.php'); ?>
+    <?php include('../components/navbar.php'); ?>
     <!-- End Top Navbar -->
 
     <!-- Main Content -->
     <div class="flex-grow bg-gray-50 flex flex-row shadow-md">
         <!-- Sidebar -->
-        <?php include('components/sidebar.php'); ?>
+        <?php include('../components/sidebar.php'); ?>
         <!-- End Sidebar -->
 
         <!-- Main Content -->
@@ -170,4 +170,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 <!-- End HTML content for classesUpdate.php -->
 
-<?php include('components/footer.php'); ?>
+<?php include('../components/footer.php'); ?>

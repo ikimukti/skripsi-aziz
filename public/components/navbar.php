@@ -1,6 +1,6 @@
         <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6 shadow-md sticky top-0">
             <div class="flex items-center flex-shrink-0 text-white mr-6">
-                <a href="//public/index.php">
+                <a href="<?php echo $baseUrl; ?>public/index.php">
                     <span class="font-semibold text-xl tracking-tight">Skripsi Aziz</span>
                 </a>
             </div>

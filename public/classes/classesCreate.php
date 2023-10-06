@@ -2,7 +2,7 @@
 // Initialize the session
 session_start();
 
-require_once('database/connection.php');
+require_once('../../database/connection.php');
 
 // Initialize errors array
 $errors = array();
@@ -76,16 +76,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Close database connection
 $conn->close();
 ?>
-<?php include_once('components/header.php'); ?>
+<?php include_once('../components/header.php'); ?>
 <!-- Main Content Height Menyesuaikan Hasil Kurang dari Header dan Footer -->
 <div class="h-screen flex flex-col">
     <!-- Top Navbar -->
-    <?php include('components/navbar.php'); ?>
+    <?php include('../components/navbar.php'); ?>
     <!-- End Top Navbar -->
     <!-- Main Content -->
     <div class="flex-grow bg-gray-50 flex flex-row shadow-md">
         <!-- Sidebar -->
-        <?php include('components/sidebar.php'); ?>
+        <?php include('../components/sidebar.php'); ?>
         <!-- End Sidebar -->
 
         <!-- Main Content -->
@@ -161,7 +161,7 @@ $conn->close();
     </main>
 </div>
 <!-- Footer -->
-<?php include('components/footer.php'); ?>
+<?php include('../components/footer.php'); ?>
 <!-- End Footer -->
 </div>
 <!-- End Main Content -->

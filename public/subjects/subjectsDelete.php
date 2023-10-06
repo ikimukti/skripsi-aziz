@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once('database/connection.php');
+require_once('../../database/connection.php');
 
 // Check if user is logged in and has the necessary permissions
 if ($_SESSION['role'] !== 'admin') {

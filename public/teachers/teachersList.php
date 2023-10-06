@@ -2,23 +2,23 @@
 // Initialize the session
 session_start();
 // Include the connection file
-require_once('database/connection.php');
+require_once('../../database/connection.php');
 
 // Initialize variables
 $username = $password = '';
 $errors = array();
 // Close the database connection
 ?>
-<?php include_once('components/header.php'); ?>
+<?php include_once('../components/header.php'); ?>
 <!-- Main Content Height Menyesuaikan Hasil Kurang dari Header dan Footer -->
 <div class="h-screen flex flex-col">
   <!-- Top Navbar -->
-  <?php include('components/navbar.php'); ?>
+  <?php include('../components/navbar.php'); ?>
   <!-- End Top Navbar -->
   <!-- Main Content -->
   <div class="flex-grow bg-gray-50 flex flex-row shadow-md">
     <!-- Sidebar -->
-    <?php include('components/sidebar.php'); ?>
+    <?php include('../components/sidebar.php'); ?>
     <!-- End Sidebar -->
 
     <!-- Main Content -->
@@ -196,7 +196,7 @@ $errors = array();
   </div>
   <!-- End Main Content -->
   <!-- Footer -->
-  <?php include('components/footer.php'); ?>
+  <?php include('../components/footer.php'); ?>
   <!-- End Footer -->
 </div>
 <!-- End Main Content -->

@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once('database/connection.php');
-include_once('components/header.php');
+require_once('../../database/connection.php');
+include_once('../components/header.php');
 
 // Check if the ID is provided in the query parameter
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
@@ -33,13 +33,13 @@ $class = $result->fetch_assoc();
 <!-- Start HTML content for classesDetail.php -->
 <div class="h-screen flex flex-col">
     <!-- Top Navbar -->
-    <?php include('components/navbar.php'); ?>
+    <?php include('../components/navbar.php'); ?>
     <!-- End Top Navbar -->
 
     <!-- Main Content -->
     <div class="flex-grow bg-gray-50 flex flex-row shadow-md">
         <!-- Sidebar -->
-        <?php include('components/sidebar.php'); ?>
+        <?php include('../components/sidebar.php'); ?>
         <!-- End Sidebar -->
         <main class="bg-gray-50 flex flex-col flex-1 overflow-y-scroll h-screen w-screen sc-hide scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200 p-6">
             <div class="flex items-start justify-beetween mb-6 flex-row">
@@ -64,12 +64,12 @@ $class = $result->fetch_assoc();
     <!-- End Main Content -->
 
     <!-- Footer -->
-    <?php include('components/footer.php'); ?>
+    <?php include('../components/footer.php'); ?>
     <!-- End Footer -->
 </div>
 <!-- End HTML content for classesDetail.php -->
 
 <?php
 $stmt->close();
-include_once('components/footer.php');
+include_once('../components/footer.php');
 ?>

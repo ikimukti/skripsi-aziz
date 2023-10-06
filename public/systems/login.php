@@ -1,7 +1,7 @@
 <?php
 session_start();
 // Include the connection file
-require_once('database/connection.php');
+require_once('../../database/connection.php');
 
 // Initialize variables
 $username = $password = '';
@@ -71,13 +71,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Close the database connection
 $conn->close();
 ?>
-<?php include_once('components/header.php'); ?>
+<?php include_once('../components/header.php'); ?>
 <!-- Main Content Height Menyesuaikan Hasil Kurang dari Header dan Footer -->
 <div class="h-screen flex flex-col">
     <!-- Top Navbar -->
     <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6">
         <div class="flex items-center flex-shrink-0 text-white mr-6">
-            <a href="//public/index.php">
+            <a href="../index.php">
                 <span class="font-semibold text-xl tracking-tight">Skripsi Aziz</span>
             </a>
         </div>
@@ -97,7 +97,7 @@ $conn->close();
                 </a>
             </div>
             <div>
-                <a href="//public/systems/register.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Register</a>
+                <a href="../systems/register.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Register</a>
             </div>
         </div>
     </nav>

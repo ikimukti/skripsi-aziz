@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skripsi Aziz</title>
     <!-- Tailwind CSS -->
-    <link rel="stylesheet" href="/dist/output.css">
-    <link rel="stylesheet" href="/node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>dist/output.css">
+    <link rel="stylesheet" href="<?php echo $baseUrl; ?>node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
 </head>
 
 <body class="overflow-hidden">
