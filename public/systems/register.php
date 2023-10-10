@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Add session success message
             $_SESSION['success'] = 'Registration successful.';
-            header('Location: systems/login.php');
+            header('Location: ../systems/login.php');
             exit();
         } else {
             $errors['registration_failed'] = 'Failed to register user.';
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Top Navbar -->
     <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6">
         <div class="flex items-center flex-shrink-0 text-white mr-6">
-            <a href="../public/index.php">
+            <a href="../index.php">
                 <span class="font-semibold text-xl tracking-tight">Skripsi Aziz</span>
             </a>
         </div>
@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </a>
             </div>
             <div>
-                <a href="../public/systems/login.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Login</a>
+                <a href="../systems/login.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Login</a>
             </div>
         </div>
     </nav>
@@ -143,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endforeach;
                     }
                     ?>
-                    <form action="systems/register.php" method="POST" class="mb-6">
+                    <form action="register.php" method="POST" class="mb-6">
                         <label for="username" class="block text-left text-gray-600 mb-2">Username</label>
                         <input type="text" id="username" name="username" class="border border-gray-300 rounded-full px-4 py-2 w-full mb-2" required>
 

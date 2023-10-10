@@ -56,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['nisn'] = null;
             }
 
-            // Redirect to a dashboard or homepage
-            header('Location: systems/dashboard.php');
+            // Redirect to a dashboard or homepage'$baseUrl
+            header('Location: ../systems/dashboard.php');
             exit();
         } else {
             $errors['login_failed'] = 'Invalid username or password.';
@@ -77,7 +77,7 @@ $conn->close();
     <!-- Top Navbar -->
     <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6">
         <div class="flex items-center flex-shrink-0 text-white mr-6">
-            <a href="../index.php">
+            <a href="<?php echo $baseUrl; ?>public/index.php">
                 <span class="font-semibold text-xl tracking-tight">Skripsi Aziz</span>
             </a>
         </div>
@@ -97,7 +97,7 @@ $conn->close();
                 </a>
             </div>
             <div>
-                <a href="../systems/register.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Register</a>
+                <a href="<?php echo $baseUrl; ?>public/systems/register.php" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">Register</a>
             </div>
         </div>
     </nav>
@@ -137,8 +137,8 @@ $conn->close();
                             Log In
                         </button>
                     </form>
-                    <p class="text-gray-500 text-sm">Forgot your password? <a href="systems/forgot-password.php" class="text-blue-500">Click here</a></p>
-                    <p class="text-gray-500 text-sm">Don't have an account? <a href="systems/register.php" class="text-blue-500">Register here</a></p>
+                    <p class="text-gray-500 text-sm">Forgot your password? <a href="<?php echo $baseUrl; ?>public/systems/forgot-password.php" class="text-blue-500">Click here</a></p>
+                    <p class="text-gray-500 text-sm">Don't have an account? <a href="<?php echo $baseUrl; ?>public/systems/register.php" class="text-blue-500">Register here</a></p>
                 </div>
             </div>
         </div>
