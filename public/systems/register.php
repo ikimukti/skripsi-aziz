@@ -1,9 +1,10 @@
 <?php
 // Include the connection file
 require_once('../../database/connection.php');
+include_once('../components/header.php');
 
 // Initialize variables
-$username = $password = '';
+$username = $password = $confirm_password = $email = $fullname = '';
 $errors = array();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -70,27 +71,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param('ssssss', $username, $email, $hashed_password, $default_role, $fullname, $default_nisn);
 
         if ($stmt->execute()) {
-            // Registration successful, you can redirect the user to the login page
-
-            // Add session success message
-            $_SESSION['success'] = 'Registration successful.';
-            header('Location: ../systems/login.php');
-            exit();
+            // Registration successful, trigger SweetAlert
+            echo '<script>
+                    Swal.fire({
+                        icon: "success",
+                        title: "Registration Successful!",
+                        text: "You can now login.",
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(function(){
+                        window.location.href = "../systems/login.php";
+                    });
+                  </script>';
         } else {
             $errors['registration_failed'] = 'Failed to register user.';
+            // Registration failed, trigger SweetAlert for error
+            echo '<script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Registration Failed!",
+                    text: "Failed to register user. Please try again later.",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+              </script>';
         }
 
         // Close the statement
         $stmt->close();
     }
-
-    // If there are errors, proceed with the error handling
-    if (count($errors) > 0) {
-        $stmt->close();
-    }
 }
 ?>
-<?php include_once('../components/header.php'); ?>
+
 <!-- Main Content Height Menyesuaikan Hasil Kurang dari Header dan Footer -->
 <div class="h-screen flex flex-col">
     <!-- Top Navbar -->
@@ -145,13 +157,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ?>
                     <form action="register.php" method="POST" class="mb-6">
                         <label for="username" class="block text-left text-gray-600 mb-2">Username</label>
-                        <input type="text" id="username" name="username" class="border border-gray-300 rounded-full px-4 py-2 w-full mb-2" required>
+                        <input type="text" id="username" name="username" class="border border-gray-300 rounded-full px-4 py-2 w-full mb-2" required value="<?php echo htmlspecialchars($username); ?>">
 
                         <label for="fullname" class="block text-left text-gray-600 mb-2">Fullname</label>
-                        <input type="text" id="fullname" name="fullname" class="border border-gray-300 rounded-full px-4 py-2 w-full mb-2" required>
+                        <input type="text" id="fullname" name="fullname" class="border border-gray-300 rounded-full px-4 py-2 w-full mb-2" required value="<?php echo htmlspecialchars($fullname); ?>">
 
                         <label for="email" class="block text-left text-gray-600 mb-2">Email</label>
-                        <input type="email" id="email" name="email" class="border border-gray-300 rounded-full px-4 py-2 w-full mb-2" required>
+                        <input type="email" id="email" name="email" class="border border-gray-300 rounded-full px-4 py-2 w-full mb-2" required value="<?php echo htmlspecialchars($email); ?>">
 
                         <label for="password" class="block text-left text-gray-600 mb-2">Password</label>
                         <input type="password" id="password" name="password" class="border border-gray-300 rounded-full px-4 py-2 w-full mb-2" required>

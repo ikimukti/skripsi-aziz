@@ -6,6 +6,7 @@ require_once('../../database/connection.php');
 
 // Initialize errors array
 $errors = array();
+$successMessage = '';
 
 // Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -57,12 +58,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($conn->query($sql) === TRUE) {
             // Insertion successful
             $last_id = $conn->insert_id;
-            $file_name = $last_id . '.' . $file_ext;
-            $file_path = 'static/image/class/' . $file_name;
+            // Generate nama unik untuk file gambar baru
+            $new_image_name = uniqid($last_id);
+            $file_name = 'static/image/class/' . $new_image_name . '.' . $file_ext;
+            $file_path = '../' . $file_name;
             $sql = "UPDATE classes SET classes_image = '$file_name' WHERE id = '$last_id'";
             if ($conn->query($sql) === TRUE) {
                 move_uploaded_file($file_tmp, $file_path);
-                header('Location: classesList.php' . '?status=success');
+                $successMessage = 'Class created successfully.';
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }
@@ -94,7 +97,7 @@ $conn->close();
                 <!-- Header Content -->
                 <div class="flex flex-row justify-between items-center w-full border-b-2 border-gray-600 mb-2 pb-2">
                     <h1 class="text-3xl text-gray-800 font-semibold w-full">Create Class</h1>
-                    <a href="classes/classesList.php" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center space-x-2">
+                    <a href="../classes/classesList.php" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center space-x-2">
                         <i class="fas fa-arrow-left"></i>
                         <span>Back</span>
                     </a>
@@ -164,6 +167,44 @@ $conn->close();
 <?php include('../components/footer.php'); ?>
 <!-- End Footer -->
 </div>
+<script>
+    // Function to show success alert
+    function showSuccessAlert(message) {
+        Swal.fire({
+            title: 'Success',
+            text: message,
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+            timer: 1500
+        }).then(function() {
+            window.location.href = '../classes/classesList.php';
+        });
+    }
+
+    // Function to show error alert
+    function showErrorAlert(message) {
+        Swal.fire({
+            title: 'Error',
+            text: message,
+            icon: 'error',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    }
+
+    // Check if successMessage is not empty, then show success alert
+    <?php if (!empty($successMessage)) : ?>
+        showSuccessAlert("<?php echo $successMessage; ?>");
+    <?php endif; ?>
+
+    // Check if there are any errors, then show error alerts
+    <?php if (!empty($errors)) : ?>
+        <?php foreach ($errors as $error) : ?>
+            showErrorAlert("<?php echo $error; ?>");
+        <?php endforeach; ?>
+    <?php endif; ?>
+</script>
 <!-- End Main Content -->
 </body>
 

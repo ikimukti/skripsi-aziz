@@ -28,7 +28,7 @@ $errors = array();
                 <div class="flex flex-row justify-between items-center w-full border-b-2 border-gray-600 mb-2 pb-2">
                     <h1 class="text-3xl text-gray-800 font-semibol w-full">Classes</h1>
                     <div class="flex flex-row justify-end items-center">
-                        <a href="classes/classesCreate.php" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+                        <a href="../classes/classesCreate.php" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
                             <i class="fas fa-plus mr-2"></i>
                             <span>Create</span>
                         </a>
@@ -89,15 +89,15 @@ $errors = array();
                                     <td class="py-2"><?php echo substr($row['description'], 0, 50) . '...'; ?></td>
                                     <td class="py-2"><?php echo date('M j, Y H:i:s', strtotime($row['updated_at'])); ?></td>
                                     <td class='py-2'>
-                                        <a href="classes/classesDetail.php?id=<?php echo $row['id'] ?>" class='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
+                                        <a href="../classes/classesDetail.php?id=<?php echo $row['id'] ?>" class='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
                                             <i class='fas fa-eye mr-2'></i>
                                             <span>Detail</span>
                                         </a>
-                                        <a href="classes/classesUpdate.php?id=<?php echo $row['id'] ?>" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
+                                        <a href="../classes/classesUpdate.php?id=<?php echo $row['id'] ?>" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2 text-sm'>
                                             <i class='fas fa-edit mr-2'></i>
                                             <span>Edit</span>
                                         </a>
-                                        <a href="classes/ClassesDelete.php?id=<?php echo $row['id'] ?>" class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-flex items-center text-sm'>
+                                        <a href="#" onclick="confirmDelete(<?php echo $row['id']; ?>)" class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-flex items-center text-sm'>
                                             <i class='fas fa-trash mr-2'></i>
                                             <span>Delete</span>
                                         </a>
@@ -183,7 +183,24 @@ $errors = array();
     <!-- End Footer -->
 </div>
 <!-- End Main Content -->
-
+<script>
+    // Function to show a confirmation dialog
+    function confirmDelete(classId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the user confirms, redirect to the delete page
+                window.location.href = `ClassesDelete.php?id=${classId}`;
+            }
+        });
+    }
+</script>
 </body>
 
 </html>

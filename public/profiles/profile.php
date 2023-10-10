@@ -5,54 +5,45 @@ session_start();
 require_once('../../database/connection.php');
 
 // Initialize variables
-$username = $password = '';
 $errors = array();
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the user inputs
     $username = $_POST['username'];
-    $password = $_POST['password'];
 
     // Perform basic validation
     if (empty($username)) {
         $errors['username'] = 'Username is required.';
     }
-    if (empty($password)) {
-        $errors['password'] = 'Password is required.';
-    }
 
-    // If no errors, proceed with login
+    // If no errors, proceed with updating profile
     if (empty($errors)) {
-        // Hash the password for comparison
-        $hashed_password = hash('sha256', $password);
+        // Prepare and execute a query to update user profile
+        $user_id = $_SESSION['user_id'];
+        $fullname = $_POST['fullname'];
+        $email = $_POST['email'];
+        $username = $_POST['username'];
+        $nisn = $_POST['nisn'];
+        $role = $_POST['role'];
 
-        // Prepare and execute a query to check user credentials
-        $query = "SELECT * FROM users WHERE username = ? AND password = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('ss', $username, $hashed_password);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $update_query = "UPDATE users SET fullname = ?, email = ?, username = ?, nisn = ?, role = ? WHERE id = ?";
+        $update_stmt = $conn->prepare($update_query);
+        $update_stmt->bind_param('sssssi', $fullname, $email, $username, $nisn, $role, $user_id);
 
-        // Check if user exists
-        if ($result->num_rows === 1) {
-            // Perform login actions (e.g., set sessions, redirect, etc.)
-            $row = $result->fetch_assoc();
-            $_SESSION['user_id'] = $row['id'];
-            $_SESSION['username'] = $row['username'];
-            $_SESSION['role'] = $row['role'];
-            $_SESSION['email'] = $row['email'];
-            $_SESSION['fullname'] = $row['fullname'];
+        if ($update_stmt->execute()) {
+            $_SESSION['fullname'] = $fullname;
+            $_SESSION['email'] = $email;
+            $_SESSION['username'] = $username;
+            $_SESSION['nisn'] = $nisn;
+            $_SESSION['role'] = $role;
 
             // Redirect to a dashboard or homepage
-            header('Location: dashboard.php');
+            // header('Location: ../systems/dashboard.php');
             exit();
         } else {
-            $errors['login_failed'] = 'Invalid username or password.';
+            $errors['update_failed'] = 'Failed to update profile.';
         }
-
-        // Close the statement
-        $stmt->close();
     }
 }
 
@@ -80,15 +71,20 @@ $conn->close();
                 <!-- Form -->
                 <div class="flex flex-row w-full space-x-2 space-y-2 mt-4 mb-4">
                     <!-- Image Profile -->
-                    <div class="flex flex-col w-96 h-96 items-center justify-center pt-4">
-                        <img src="//public/static/image/profile/default.jpg" alt="default" class="rounded-md w-full h-full object-cover">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 w-full">
-                            Change Image
-                        </button>
+                    <div class="flex flex-col w-96 items-center justify-center pt-4">
+                        <img src="../<?php echo $_SESSION['profile_url']; ?>" alt="Profile Image" class="rounded-md object-cover">
+                        <!-- Form untuk mengunggah gambar profil baru -->
+                        <form id="image-upload-form" action="upload_image.php" method="POST" enctype="multipart/form-data" class="w-full">
+                            <input type="file" name="profile_image" accept="image/*">
+                            <button type="button" onclick="confirmImageUpload()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 w-full">
+                                Upload Image
+                            </button>
+                        </form>
+
                     </div>
                     <!-- End Image -->
                     <!-- Form Profile -->
-                    <form action="update_profile.php" method="POST" class="flex flex-col w-full space-x-2 mt-4 mb-4">
+                    <form action="profile.php" method="POST" class="flex flex-col w-full space-x-2 mt-4 mb-4" id="profile-update-form">
                         <!-- Full Name -->
                         <label for="fullname" class="block font-semibold text-gray-800 mt-2 mb-2">Full Name</label>
                         <input type="text" id="fullname" name="fullname" class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 focus:outline-none px-2 py-2 border" value="<?php echo $_SESSION['fullname']; ?>">
@@ -132,7 +128,7 @@ $conn->close();
 
                         <!-- Role -->
                         <label for="role" class="block font-semibold text-gray-800 mt-2 mb-2">Role</label>
-                        <input type="text" id="role" name="role" class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 focus:outline-none px-2 py-2 border" value="<?php echo $_SESSION['role']; ?>">
+                        <input type="text" id="role" name="role" class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 focus:outline-none px-2 py-2 border" value="<?php echo $_SESSION['role']; ?>" readonly="readonly" required="required">
                         <!-- Error Role -->
                         <?php if (isset($errors['role'])) : ?>
                             <p class="text-red-500 text-sm">
@@ -145,7 +141,7 @@ $conn->close();
 
 
                         <!-- Update Button -->
-                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">
+                        <button type="button" onclick="confirmProfileUpdate()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">
                             Update Profile
                         </button>
                     </form>

@@ -2,7 +2,7 @@
 session_start();
 // Include the connection file
 require_once('../../database/connection.php');
-
+include_once('../components/header.php');
 // Initialize variables
 $username = $password = '';
 $errors = array();
@@ -50,17 +50,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['role'] = $row['role'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['fullname'] = $row['fullname'];
+            $_SESSION['profile_url'] = $row['profile_url'];
             if ($row['nisn'] != null) {
                 $_SESSION['nisn'] = $row['nisn'];
             } else {
                 $_SESSION['nisn'] = null;
             }
 
-            // Redirect to a dashboard or homepage'$baseUrl
-            header('Location: ../systems/dashboard.php');
+            // Trigger a SweetAlert for successful login
+            echo '<script>
+                Swal.fire({
+                    icon: "success",
+                    title: "Success!",
+                    text: "Login successful.",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(function(){
+                    window.location.href = "../systems/dashboard.php";
+                });
+            </script>';
             exit();
         } else {
             $errors['login_failed'] = 'Invalid username or password.';
+
+            // Trigger a SweetAlert for failed login
+            echo '<script>
+            Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: "Invalid username or password.",
+                showConfirmButton: false,
+                timer: 1500
+            });
+          </script>';
         }
 
         // Close the statement
@@ -71,7 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Close the database connection
 $conn->close();
 ?>
-<?php include_once('../components/header.php'); ?>
 <!-- Main Content Height Menyesuaikan Hasil Kurang dari Header dan Footer -->
 <div class="h-screen flex flex-col">
     <!-- Top Navbar -->
